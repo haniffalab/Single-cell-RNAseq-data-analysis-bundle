@@ -1,0 +1,21 @@
+Pro Pre B cell_skin
+pDC_skin
+NK_skin
+MLP_skin
+ILC progenitor_skin
+B cell_skin
+Pre pro B cell_liver
+pro-B cell_liver
+pre-B cell_liver
+pDC precursor_liver
+Early lymphoid/T lymphocyte_liver
+NK_liver
+Mono-NK_liver
+ILC progenitor_liver
+HSC/MPP_liver
+B cell_liver
+Pro Pre B cell_kidney
+pDC_kidney
+NK_kidney
+MLP_kidney
+ILC progenitor_kidney

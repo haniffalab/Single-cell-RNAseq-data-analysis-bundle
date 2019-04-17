@@ -1,0 +1,32 @@
+                               precision    recall  f1-score   support
+
+                       B cell       1.00      0.94      0.97        49
+                          DC1       1.00      0.79      0.88        19
+                          DC2       0.84      0.88      0.86       147
+                EI macrophage       0.93      0.99      0.96        68
+              Early Erythroid       0.88      0.90      0.89       804
+  Early lymphoid/T lymphocyte       0.96      0.94      0.95        47
+             Endothelial cell       0.98      0.97      0.97       232
+                   Fibroblast       0.91      0.97      0.94        66
+                      HSC/MPP       0.94      0.99      0.96       182
+                   Hepatocyte       0.98      1.00      0.99       107
+               ILC progenitor       0.92      1.00      0.96        33
+                 Kupffer Cell       0.96      0.99      0.97      1088
+               Late Erythroid       0.94      0.89      0.91        70
+                         MEMP       0.78      0.65      0.71        88
+                    Mast cell       1.00      0.91      0.95        58
+                Megakaryocyte       0.97      0.97      0.97       279
+               Mid  Erythroid       0.97      0.96      0.96      2553
+                     Mono-Mac       0.86      0.88      0.87       190
+                      Mono-NK       0.97      1.00      0.99        78
+                     Monocyte       0.98      0.87      0.92       113
+        Monocyte-DC precursor       0.95      0.93      0.94        74
+                           NK       0.99      0.99      0.99       338
+Neutrophil-myeloid progenitor       0.91      0.94      0.93        72
+               Pre pro B cell       0.91      0.82      0.86        49
+         VCAM1+ EI macrophage       0.93      0.83      0.88       181
+                pDC precursor       0.94      0.94      0.94        17
+                   pre-B cell       0.90      0.86      0.88        92
+                   pro-B cell       0.97      0.95      0.96        77
+
+                  avg / total       0.95      0.95      0.95      7171

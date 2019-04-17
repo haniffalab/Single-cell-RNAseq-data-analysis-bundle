@@ -1,0 +1,29 @@
+CellTypes,Colours
+HSC/MPP,#f9ee90
+Pre pro B cell,#12c44b
+pro-B cell,#93baf1
+pre-B cell,#84f6cc
+B cell,#ac473e
+ILC progenitor,#f3c1f5
+Early lymphoid/T lymphocyte,#f94848
+NK,#4a81f7
+Neutrophil-myeloid progenitor,#0a69bd
+Monocyte-DC precursor,#59dbf3
+pDC precursor,#d064f7
+DC1,#f67979
+DC2,#eebe59
+Monocyte,#9ffc8d
+Mono-Mac,#f1e5e4
+Mono-NK,#fecfb9
+Kupffer Cell,#34dfd7
+VCAM1+ EI macrophage,#926db0
+EI macrophage,#f46c97
+MEMP,#fa9b47
+Mast cell,#ff3838
+Megakaryocyte,#8f8bf8
+Early Erythroid,#cee9fd
+Mid  Erythroid,#ffd1dd
+Late Erythroid,#8e2f8e
+Endothelial cell,#a111e4
+Fibroblast,#6934f9
+Hepatocyte,#723f09

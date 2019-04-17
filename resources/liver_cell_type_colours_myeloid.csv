@@ -1,0 +1,13 @@
+CellTypes,Colours
+Neut-myeloid progenitor,antiquewhite2
+Monocyte-DC progenitor,aquamarine3
+pDC progenitor,azure3
+DC1,bisque2
+DC2,blue3
+Monocyte,blueviolet
+Mono-Mac,brown4
+Mono-4 like,cadetblue2
+Kupffer Cell,chartreuse4
+VCAM1+ Erythroid Macrophage,mediumslateblue
+Erythroid Macrophage,darkgoldenrod
+HSC,darkkhaki

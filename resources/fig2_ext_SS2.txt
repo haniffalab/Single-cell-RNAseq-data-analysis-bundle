@@ -1,0 +1,6 @@
+New::Early Erythroid
+New::Mid  Erythroid
+New::Late Erythroid
+New::Kupffer Cell
+New::VCAM1+ EI macrophage
+New::Endothelial cell
