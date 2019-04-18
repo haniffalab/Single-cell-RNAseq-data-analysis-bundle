@@ -443,36 +443,42 @@ TRAV7
     * _save.to folder_ name were classifier files and report are saved. The folder will be created in _resource_ folder because doublet detectors are consider resources
 
 ### pull_data_subset_from_seurat.sh
-  - used for saving to disk parts of a data set. This is especially for bigger data sets or when needing to run statistics for specific question that do not require the entire data and allows work in an interactive session
-    - seurat.addr file name of the RDS object containing the input data as a seurat object. Must include only the file name not the path because the assumption is that data files are kept in the data folder.
-    - genes.file name of file found in the resource folder that list required genes to subset having one gene name per line. If this is NA than all genes will used
-    - set.ident name of column in meta data to used for partitioning the data
-    - cell.types name of file found in the resource folder that lists the cell type for partitioning the data with one cell type per lane. If set to "all" all the cell types will be used.
-    - save.meta boolean to save meta data. Having the meta data in separate file it is very useful when working with big data sets and will save a lot of time
-    - save.raw.data boolean to save the raw counts data
-    - save.data boolean to save normalized gene expression data
-    - save.dr boolean to save all dimensionally reduction coordinates
+* used for saving to disk parts of a data set. This is especially useful for bigger data sets or when needing to run statistics for specific questions that do not require the entire data and allows working in an interactive session
+* the arguments:
+    * _seurat.addr_ file name of the RDS object containing the input data as a seurat object. Must include only the file name not the path because the assumption is that data files are kept in _data_ folder.
+    * _genes.file_ name of file found in the resource folder that list required genes to subset having one gene name per line. If this is NA than all genes will used
+    * _set.ident_ name of column in meta data to used for partitioning the data
+    * _cell.types_ name of file found in the resource folder that lists the cell type for partitioning the data with one cell type per lane. If set to "all" all the cell types will be used.
+    * _save.meta_ boolean to save meta data. Having the meta data in separate file it is very useful when working with big data sets and will save a lot of time
+    * _save.raw.data_ boolean to save the raw counts data
+    * _save.data_ boolean to save normalized gene expression data
+    * _save.dr_ boolean to save all dimensionally reduction coordinates
 
 ### clustering_comparison.sh
-  - compares Louvain clustering with 2 other types of clustering (agglomerative clustering and Gaussian mixture)
-  - metrics are rand index and adjusted mutual information
-    - seurat.addr file name of the RDS object containing the input data as a seurat object. Must include only the file name not the path because the assumption is that data files are kept in the data folder.
-    - set.ident name of column in meta data to used for partitioning the data
-    - n_clusters number of clusters
-    - type.to.colour name of csv file that contains the colour key (mapping between categories in the set.ident and colours). Must contain only the file name not the full or relative path because the assumption is that this is a resource file that is placed in the resource folder. Color keys compatible with the single cell analysis bundle can be generated using the interactive tool color_management.html
+* compares Louvain clustering with 2 other types of clustering (agglomerative clustering and Gaussian mixture)
+* metrics are rand index and adjusted mutual information
+* the arguments
+    * _seurat.addr_ file name of the RDS object containing the input data as a seurat object. Must include only the file name not the path because the assumption is that data files are kept in _data_ folder.
+    * _set.ident_ name of column in meta data to used for partitioning the data
+    * _n\_clusters_ number of clusters
+    * _type.to.colour_ name of csv file that contains the colour key (mapping between categories in the set.ident and colours). Must contain only the file name not the full or relative path because the assumption is that this is a resource file that is placed in _resource_ folder. Color keys compatible with the single cell analysis bundle can be generated using the interactive tool _color\_management.html_
 
 ### batch_correction.sh
-  - perform batch correction at the level of principal components (also called data integration) using harmony R package
-  - the dimensionality reduction coordinates are computed based on harmony principal components
-    - seurat.addr file name of the RDS object containing the input data as a seurat object. Must include only the file name not the path because the assumption is that data files are kept in the data folder.
-    - correct.by meta data column to be correct by. Usually this should indicate sample assignment
-    - save.at name of file to save the batch corrected data as Seurat object in RDS format. The file will be saved in the folder data
+* perform batch correction at the level of principal components (also called data integration) using harmony R package
+* the dimensionality reduction coordinates are computed based on harmony principal components
+* the arguments
+    * _seurat.addr_ file name of the RDS object containing the input data as a seurat object. Must include only the file name not the path because the assumption is that data files are kept in _data_ folder.
+    * _correct.by_ meta data column to be correct by. Usually this should indicate sample assignment
+    * _save.at_ name of file to save the batch corrected data as Seurat object in RDS format. The file will be saved in the folder _data_
  
 ### wordclouds.sh
-  - creates word clouds of cell types and DEGs for each cell population or other categories in the data set
-  - cell type word clouds are generated based on tag mentions weighted by gene expression
-    - seurat.addr file name of the RDS object containing the input data as a seurat object. Must include only the file name not the path because the assumption is that data files are kept in the data folder.
-    - set.ident name of column in meta data to used for partitioning the data
+* creates word clouds of cell types and DEGs for each cell population or other categories in the data set
+* cell type word clouds are generated based on tag mentions weighted by gene expression
+* the arguments:
+    * _seurat.addr_ file name of the RDS object containing the input data as a seurat object. Must include only the file name not the path because the assumption is that data files are kept in _data_ folder.
+    * _set.ident_ name of column in meta data to used for partitioning the data
+* see the image for an example of word cloud output:\
+![wordcloud](wordcloud.png)
 
 ### update_annotation.sh
   - used to update the annotations in a seurat object following manual annotation
