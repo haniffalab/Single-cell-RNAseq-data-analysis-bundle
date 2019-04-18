@@ -410,22 +410,27 @@ TRAV7
 * this pipeline does not take external arguments
 * the entire workflow for animation creation continues with the tools in the folder _force\_abstract\_graph\_2Danimation_. It is recomended to run this in a interactive environment (on a personal computer not on a server). Inside this folder there must be an empty folder called _input_. This is where the material created by _write\_input.sh_ must be transfered. Then start _make\_fdg\_animation.py_. Inside this script there is the line `subprocess.call(["Rscript", "make_plots.R"], shell = True)`. This might fail on some platforms. The solution in this case is run the script _make\_plots.R_ independently then carry on with _make\_fdg\_animation.py_ from where you left
 * the tools in _force\_abstract\_graph\_2Danimation_ need installation of an in-house modified version of _fa2_ package. The modified version can be found at _force\_abstract\_graph\_2Danimation/iterative\_fa2/_. To install this go to _force\_abstract\_graph\_2Danimation/iterative\_fa2/_ and run `python3.6 setup.py install` (change according to your python version)
-* you must also have open computer vision python package _opencv2_ pre-installed. Check the online documentation on how to install this on your platform
+* you must also have open computer vision Python package _opencv2_ pre-installed. Check the online documentation on how to install this on your platform
 * the _write\_input.sh_ has only 2 arguments:
     * _seurat.addr_ file name of the RDS object containing the input data as a seurat object. Must include only the file name not the path because the assumption is that data files are kept in _data_ folder.
     * _cell.type.to.colour_ name of csv file found in the resource folder that contains the cell type to colour mapping. To generate colour key compatibly with the single cell analysis bundle check the interactive tool _color\_management.html_
 
 ### train_classifier.sh
-  - used for training cell type classifiers
-  - classifier type SVM using PCA input. The classifier is saved as 3 files: SVM (model.pickle), PCA projection (pca.pickle), and a list of feature genes (feature_genes.RDS) 
-  - it also saves classification reports (classification_report.txt, confusion_matrix.csv and confusion_matrix.pdf). This file could be important in gauging the utility of the classifier
-  - the classifier files and report are saved in a user-defined folder placed in the resource folder
-  - classifiers can be applied using the function Apply_Classifier_On_Seurat_Object (see the bunddle_utils.R script)
-  - IMPORTANT NOTICE: classifiers must be used only on the same type of data that it was trained on e.g. a classifier for cells in liver should only be applied on liver data. If for example you will apply the liver cell types classifier on thymus the classifier will only "see" the cell types it was trained to see and your results will be wrong. Furthermore most of the time the use of classifiers in a cross-tissue manner is highly unprofessional and indicate severe incompetence and a potential need for staff replacement. There are however a few (very few) exceptions where a classifier could be used on a different tissue from its training (e.g. the origin of the unlabelled data is not known; used as a pseudo-metric for cross-tissue cell type similarities).
-    - seurat.addr file name of the RDS object containing the input data as a seurat object. Must include only the file name not the path because the assumption is that data files are kept in the data folder.
-    - marker.genes name of csv file storing DEGs by cell population. The top 20 DEGs for each cell type are used as feature genes. The file must be found in the folder resource/marker_genes. See compute_DEG.sh on how to obtain DEGs for a data set. 
-    - save.at folder name were classifier files and report are saved. The folder will be created in the resource folder because classifiers are consider resources.
-    - classifier name of classifier script. Currently the SVM is the only one implemented so this argument should always be set to "svm". However this argument allows extending of this pipeline to work with other classifiers. During development other classifiers were logistic regression, random forest, ada boost and multi-layer perceptron. However the SVM showed the best accuracy and recall over all so only the svm was kept. 
+* used for training cell type classifiers
+* classifier type SVM using PCA input. The classifier is saved as 3 files: SVM (_model.pickle_), PCA projection (_pca.pickle_), and a list of feature genes (_feature\_genes.RDS_) 
+* it also saves classification reports (_classification\_report.txt_, _confusion\_matrix.csv_ and _confusion\_matrix.pdf_). These files are important for assessing the perfomance metrics of the resulted classifier
+* the classifier files and report are saved in a user-defined folder placed in the resource folder
+* see _resources/classifier\_svm\_cell\_type\_fetal\_liver_ for an example of a trained classifier
+* classifiers can be applied using the function _Apply\_Classifier\_On\_Seurat\_Object_ (see the _bunddle\_utils.R_ script)
+* IMPORTANT NOTICE: classifiers must be used only on the same type of data that it was trained on e.g. a classifier for cells in liver should only be applied on liver data. If for example you will apply the liver cell types classifier on thymus the classifier will only "see" the cell types it was trained to see and your results will be wrong. Furthermore most of the time the use of classifiers in a cross-tissue manner is highly unprofessional and indicate severe incompetence and a potential need for staff replacement. There are however a few (very few) exceptions where a classifier could be used on a different tissue from its training (e.g. the origin of the unlabelled data is not known; used as a pseudo-metric for cross-tissue cell type similarities).
+* DEGs must be computed before training a classifier (see _compute\_DEG_ pipeline)
+* an example of runing this pipeline:\
+`qsub train_classifier.sh 'seurat.addr = "spleen_all.RDS"; marker.genes="spleen_all_DEGs.csv"; save.at="classifier_svm_cell_type_spleen"; classifier="svm";'`
+* the arguments:
+    * _seurat.addr_ file name of the RDS object containing the input data as a seurat object. Must include only the file name not the path because the assumption is that data files are kept in _data_ folder.
+    * _marker.genes_ name of csv file storing DEGs by cell population. The top 20 DEGs for each cell type are used as feature genes. The file must be found in the folder _resource/marker\_genes_. See _compute\_DEG.sh_ on how to obtain DEGs for a data set. 
+    * _save.at_ folder name were classifier files and report are saved. The folder will be created in the resource folder because classifiers are consider resources.
+    * _classifier_ name of classifier script. Currently the SVM is the only one implemented so this argument should always be set to "svm". However this argument allows extending of this pipeline to work with other classifiers. During development other classifiers were logistic regression, random forest, ada boost and multi-layer perceptron. However the SVM showed the best accuracy and recall over all so only the svm was kept. 
 
 ### train_doublets_SVM.sh
   - pipeline for training doublet detector
