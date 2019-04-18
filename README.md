@@ -393,11 +393,11 @@ TRAV7
 * it outputs plots of normalized and non normalized gene expression by pseudotime
 * it also produces an interactive page used for visualising some of the top variable genes. Check the pseudotime portal creation tool (see [__Fast Portals__](https://github.com/DoruMP/Fast-data-portals-for-scRNAseq-data)) for a better alternative richer in functionalities and showing a higher number of genes
 * an example of runing this pipeline:\
-`qsub pseudotime.sh 'seurat.addr = "data_scseq.RDS";set.ident = "cell.labels"; cell.types = c("HSC/MPP", "Pre@@pro@@B@@cell", "pro-B@@cell", "pre-B@@cell", "B@@cell"); root_cell_type = "HSC/MPP"; var.genes = NA; type.to.colours = "type_colours.csv"'`
+`qsub pseudotime.sh 'seurat.addr = "data_scseq.RDS";set.ident = "cell.labels"; cell.types = c("HSC", "Pre@@pro@@B@@cell", "pro-B@@cell", "pre-B@@cell", "B@@cell"); root_cell_type = "HSC"; var.genes = NA; type.to.colours = "type_colours.csv"'`
 * the arguments:
     * _seurat.addr_ file name of the RDS object containing the input data as a seurat object. Must include only the file name not the path because the assumption is that data files are kept in the data folder.
     * _ident.set_ name of column in meta data to used for partitioning the data
-    * _cell.types_ character vector containing a list of cell types to be used in the trajectory. You must replace every white space in the names ("") with double sign ("@@"). Check commands example for reference. This the most important parameter for this pipeline - check the warnings about diffusion map
+    * _cell.types_ character vector containing a list of cell types to be used in the trajectory. You must replace every white space in the names (" ") with double sign ("@@"). Check commands example for reference. This the most important parameter for this pipeline - check the warnings about diffusion map
     * _root\_cell\_type_ name of root of trajectory. must exist in cell.types. Must have the same formating (replacing " " with "@@")
     * _var.genes_ set this to NA to flag the computation of all variable genes. If instead f computing variable genes one needs to analyse expression pattern of certain genes this argument must be the name of file placed in resource folder and containing a gene name per line
     * _type.to.colours_ name of csv file found in _resource_ folder that contains the cell type to colour mapping. To generate colour key compatibly with the single cell analysis bundle check the interactive tool _color\_management.html_
