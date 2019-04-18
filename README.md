@@ -245,27 +245,30 @@ For smaller data sets the scripts can be run on a local station. In such cases o
 
 ### subset_seurat.sh
 * used to subset a part of the data set and save to a new RDS file as a seurat object
-* this pipeline does not use an output folder
+* this pipeline does not use the _output_ folder
 * this pipeline does not take external arguments. Arguments must be written inside the R script _subset\_seurat.R_
 * an example of runing this pipeline:\
 `qsub subset_seurat.sh`
 * the arguments:
     * _seurat.obj.addr_ full or relative path of the input RDS file 
     * _save.at_ full or relative path of the output RDS file 
-    * _process_ boolean flag to run common data processing (normalisation, scaling, variable genes computation, PCA). It is recommended to set this to TRUE. However there are cases when data processing might not be required so in this case time can be saved by setting this argument to `FALSE`.
+    * _process_ boolean flag to run common data processing (normalisation, scaling, variable genes computation, PCA). It is recommended to set this to `TRUE`. However there are cases when data processing might not be required so in this case time can be saved by setting this argument to `FALSE`.
     * _add.dr_ boolean flag to compute tSNE, UMAP and FDG. It is recommended to set this to `TRUE`. If `TRUE` the previous argument also be set to `TRUE` otherwise an error will raised. There are times when these computations are not required so set this argument to `FALSE`. Not processing and not adding dimensionally reduction also ensures light-weight data sets which are easy to transfer over the web. 
 
 ### add_dr.sh
-  - computes tSNE, UMAP and FDG on a seurat object
-  - also includes a script called add_dr_COMBAT.R which can be used to run batch correction using COMBAT implemented in python. However this is very slow on data sets with more than 50k cells. COMBAT correction changes gene expression.
-  - the default of this pipeline is not to use COMBAT batch correction. If this is required edit the add_dr.sh file by replacing add_dr.R with add_dr_COMBAT.R
-    - seurat.addr file name of the RDS object containing the input data as a seurat object. Must include only the file name not the path because the assumption is that data files are kept in the data folder.
-    - do.normalize boolean to normalize data. This must be set to TRUE of the input data has not yet been normalized. If this is set to FALSE but the data has not been previously normalised and error will occur and the job will be killed. 
-    - add.PCA boolean to compute PCA. Same principles and warnings as for the previous argument
-    - add.TSNE boolean to compute tSNE
-    - add.UMAP boolean to compute UMAP
-    - add.FDG boolean to compute FDG
-    - save.dr boolean to save the dimensionality reduction coordinates as a data frame in a csv file in the pipeline output folder. This is particularly useful for bigger data sets which either take long time to load or are not manageable on personal computers at all. In those case having the coordinates and meta data in csv file will save time and computer crashes.
+* computes tSNE, UMAP and FDG on a seurat object
+* also includes a script called _add\_dr\_COMBAT.R_ which can be used to run batch correction using COMBAT implemented in Python. However this is very slow on data sets with more than 50k cells. COMBAT correction changes gene expression
+* the default of this pipeline is not to use COMBAT batch correction. If this is required edit the _add\_dr.sh_ file by replacing _add\_dr.R_ with _add\_dr\_COMBAT.R_
+* an example of runing this pipeline:\
+`qsub add_dr.sh 'seurat.addr = "data_scseq.RDS"; do.normalize = T; add.PCA = T; add.TSNE = T; add.UMAP = T; add.FDG = T; save.dr = F'`
+* the arguments are:
+    * _seurat.addr_ file name of the RDS object containing the input data as a seurat object. Must include only the file name not the path because the assumption is that data files are kept in _data_ folder
+    * _do.normalize_ boolean to normalize data. This must be set to `TRUE` of the input data has not yet been normalized. If this is set to `FALSE` but the data has not been previously normalised and error will occur and the job will be killed
+    * _add.PCA_ boolean to compute PCA. Same principles and warnings as for the previous argument
+    * _add.TSNE_ boolean to compute tSNE
+    * _add.UMAP_ boolean to compute UMAP
+    * _add.FDG_ boolean to compute FDG
+    * _save.dr_ boolean to save the dimensionality reduction coordinates as a data frame in a csv file in the pipeline output folder. This is particularly useful for bigger data sets which either take long time to load or are not manageable on personal computers at all. In those case having the coordinates and meta data in csv file will save time and computer crashes
 
 ### compute_DEG.sh
   - computes differential expressed genes (DEGs) on a seurat object
