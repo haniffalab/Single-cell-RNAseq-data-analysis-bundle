@@ -18,7 +18,7 @@ The bundle includes:
 * creating animated force directed graphs
 * handling big data sets as Seurat objects
  
-To create mode advanced data exploration apps and web portal visit https://github.com/DoruMP/Fast-data-portals-for-scRNAseq-data. This repository will be referred in this documentation as __Fast Portals__.
+To create mode advanced data exploration apps and web portal(s) visit https://github.com/DoruMP/Fast-data-portals-for-scRNAseq-data. This repository will be referred in this documentation as __Fast Portals__.
 
 To run the pipelines you must download the entire bundle and transfer to a server/personal computer. The folder structure must be kept as it is.
 
@@ -185,4 +185,5 @@ An example of running a pipeline:\
 * lastly it will save the resulting Seurat object overwriting the file that was initially loaded (in this case "fliv\_lymphoid\_Stage\_1.RDS"). 
 Jobs can be killed but take notice that if you terminate a process while it is writing to disk, the corresponding data will be lost.
 For smaller data sets the scripts can be run on a local station. In such cases one cannot submit jobs using the `qsub` command. Instead the R and/or Python scripts can be run directly in interactive environments but the global parameters either pe passed directly to the script or set inside the scripts.
+
 
