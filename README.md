@@ -296,7 +296,7 @@ For smaller data sets the scripts can be run on a local station. In such cases o
     * _plot.width_ numeric plot width
     * _plot.height_ numeric plot height
     * _features.file_ name of file that must be found in the resource folder and to contain a gene name per line
-* and example of _cell.labels_ file:\
+* and example of _cell.labels_ file:
 ```
 MEP_kidney
 Mast cell_kidney
@@ -307,7 +307,7 @@ MEP_skin
 Megakaryocyte_skin
 Mast cell_skin
 ```
-* an example of _features.file_ file:\
+* an example of _features.file_ file:
 ```
 UNG
 MSH6
