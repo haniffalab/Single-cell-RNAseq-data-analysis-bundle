@@ -244,13 +244,16 @@ For smaller data sets the scripts can be run on a local station. In such cases o
     * _save.at_ RDS file name where to save the merged seurat object. Must contain only the file name, not the path. It will be save to the data folder. Make sure the file names does not exist before running the pipeline to avoid over-writing of data.
 
 ### subset_seurat.sh
-  - used to subset a part of the data set and save to a new RDS file as a seurat object
-  - this pipeline does not use an output folder
-  - this pipeline does not take external arguments. Arguments must be written inside the R script subset_seurat.R
-    - seurat.obj.addr full or relative path of the input RDS file 
-    - save.at full or relative path of the output RDS file 
-    - process boolean flag to run common data processing (normalisation, scaling, variable genes computation, PCA). It is recommended to set this to TRUE. However there are cases when data processing might not be required so in this case time can be saved by setting this argument to FALSE.
-    - add.dr boolean flag to compute tSNE, UMAP and FDG. It is recommended to set this to TRUE. If TRUE the previous argument also be set to TRUE otherwise an error will raised. There are times when these computations are not required so set this argument to FALSE. Not processing and not adding dimensionally reduction also ensures light-weight data sets which are easy to transfer over the web. 
+* used to subset a part of the data set and save to a new RDS file as a seurat object
+* this pipeline does not use an output folder
+* this pipeline does not take external arguments. Arguments must be written inside the R script _subset\_seurat.R_
+* an example of runing this pipeline:\
+`qsub subset_seurat.sh`
+* the arguments:
+    * _seurat.obj.addr_ full or relative path of the input RDS file 
+    * _save.at_ full or relative path of the output RDS file 
+    * _process_ boolean flag to run common data processing (normalisation, scaling, variable genes computation, PCA). It is recommended to set this to TRUE. However there are cases when data processing might not be required so in this case time can be saved by setting this argument to `FALSE`.
+    * _add.dr_ boolean flag to compute tSNE, UMAP and FDG. It is recommended to set this to `TRUE`. If `TRUE` the previous argument also be set to `TRUE` otherwise an error will raised. There are times when these computations are not required so set this argument to `FALSE`. Not processing and not adding dimensionally reduction also ensures light-weight data sets which are easy to transfer over the web. 
 
 ### add_dr.sh
   - computes tSNE, UMAP and FDG on a seurat object
