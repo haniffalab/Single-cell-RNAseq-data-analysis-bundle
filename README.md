@@ -307,7 +307,7 @@ MEP_skin
 Megakaryocyte_skin
 Mast cell_skin
 ```
-*an example of _features.file_ file:\
+* an example of _features.file_ file:\
 ```
 UNG
 MSH6
