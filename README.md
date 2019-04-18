@@ -421,7 +421,7 @@ TRAV7
 * classifier type SVM using PCA input. The classifier is saved as 3 files: SVM (_model.pickle_), PCA projection (_pca.pickle_), and a list of feature genes (_feature\_genes.RDS_) 
 * it also saves classification reports (_classification\_report.txt_, _confusion\_matrix.csv_ and _confusion\_matrix.pdf_). These files are important for assessing the perfomance metrics of the resulted classifier
 * the classifier files and report are saved in a user-defined folder placed in the resource folder
-* see _resources/classifier\_svm\_cell\_type\_fetal\_liver_ for an example of a trained classifier
+* see _resources/classifier\_svm\_cell\_type\_liver_ for an example of a trained classifier
 * classifiers can be applied using the function _Apply\_Classifier\_On\_Seurat\_Object_ (see the _bunddle\_utils.R_ script)
 * IMPORTANT NOTICE: classifiers must be used only on the same type of data that it was trained on e.g. a classifier for cells in liver should only be applied on liver data. If for example you will apply the liver cell types classifier on thymus the classifier will only "see" the cell types it was trained to see and your results will be wrong. Furthermore most of the time the use of classifiers in a cross-tissue manner is highly unprofessional and indicate severe incompetence and a potential need for staff replacement. There are however a few (very few) exceptions where a classifier could be used on a different tissue from its training (e.g. the origin of the unlabelled data is not known; used as a pseudo-metric for cross-tissue cell type similarities).
 * DEGs must be computed before training a classifier (see _compute\_DEG_ pipeline)
