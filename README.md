@@ -54,7 +54,8 @@ scanpy 1.2.2\
 sklearn 0.19.1\
 numpy 1.14.2\
 scipy 1.0.0\
-umap 0.2.3
+umap 0.2.3\
+cv2 3.3.1
  
 R version 3.4.2
 >Seurat 2.3.4\
@@ -403,16 +404,16 @@ TRAV7
     * _type.to.colours_ name of csv file found in _resource_ folder that contains the cell type to colour mapping. To generate colour key compatibly with the single cell analysis bundle check the interactive tool _color\_management.html_
 
 ### fdg_animation_write_input
-  - this pipeline is used for the fist step in creating an animated force direct graph. 
-  - the pipeline name is write_input.sh
-  - this saves important material to be used in the animation creation (a legend figure, a csv file mapping cell types to colours, PCA data and the shared nearest neighbour graph in sparse matrix format)
-  - this pipeline does not take external arguments
-  - the entire workflow for animation creation continues with the tools in the folder force_abstract_graph_2Danimation. It is recomended to run this in a supervised way (on a personal computer not on a server). Inside this folder there must be an empty folder called input. This where the material created by write_input.sh must be transfered. Then start make_fdg_animation.py. Inside this script there is the line "subprocess.call(["Rscript", "make_plots.R"], shell = True)". This might fail on different platform. The solution in this case is run the script make_plots.R independently then carry on with make_fdg_animation.py from where you left.
-  - the tools in force_abstract_graph_2Danimation need installation of an in-house modified version of fa2 package. The modified version can be found at force_abstract_graph_2Danimation/iterative_fa2/. To install this go to force_abstract_graph_2Danimation/iterative_fa2/ and run "python3.6 setup.py install" (change according to your python version)
-  - you must also have open computer vision python package opencv2 pre-installed. Check the online documentation on how to install this on your platform
-  - the write_input.sh has only 2 arguments:
-    - seurat.addr file name of the RDS object containing the input data as a seurat object. Must include only the file name not the path because the assumption is that data files are kept in the data folder.
-    - cell.type.to.colour name of csv file found in the resource folder that contains the cell type to colour mapping. To generate colour key compatibly with the single cell analysis bundle check the interactive tool color_management.html
+* this pipeline is used for the fist step in creating an animated force direct graph. 
+* the pipeline name is _write\_input.sh_
+* this processes and saves material to be used in the animation creation (a legend figure, a csv file mapping cell types to colours, PCA data and the shared nearest neighbour graph in sparse matrix format)
+* this pipeline does not take external arguments
+* the entire workflow for animation creation continues with the tools in the folder _force\_abstract\_graph\_2Danimation_. It is recomended to run this in a interactive environment (on a personal computer not on a server). Inside this folder there must be an empty folder called _input_. This is where the material created by _write\_input.sh_ must be transfered. Then start _make\_fdg\_animation.py_. Inside this script there is the line `subprocess.call(["Rscript", "make_plots.R"], shell = True)`. This might fail on some platforms. The solution in this case is run the script _make\_plots.R_ independently then carry on with _make\_fdg\_animation.py_ from where you left
+* the tools in _force\_abstract\_graph\_2Danimation_ need installation of an in-house modified version of _fa2_ package. The modified version can be found at _force\_abstract\_graph\_2Danimation/iterative\_fa2/_. To install this go to _force\_abstract\_graph\_2Danimation/iterative\_fa2/_ and run `python3.6 setup.py install` (change according to your python version)
+* you must also have open computer vision python package _opencv2_ pre-installed. Check the online documentation on how to install this on your platform
+* the _write\_input.sh_ has only 2 arguments:
+    * _seurat.addr_ file name of the RDS object containing the input data as a seurat object. Must include only the file name not the path because the assumption is that data files are kept in _data_ folder.
+    * _cell.type.to.colour_ name of csv file found in the resource folder that contains the cell type to colour mapping. To generate colour key compatibly with the single cell analysis bundle check the interactive tool _color\_management.html_
 
 ### train_classifier.sh
   - used for training cell type classifiers
