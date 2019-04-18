@@ -404,7 +404,8 @@ TRAV7
     * _type.to.colours_ name of csv file found in _resource_ folder that contains the cell type to colour mapping. To generate colour key compatibly with the single cell analysis bundle check the interactive tool _color\_management.html_
 
 ### fdg_animation_write_input
-* this pipeline is used for the fist step in creating an animated force direct graph. 
+* this pipeline is used for the fist step in creating an animated force direct graph
+* see [here](https://developmentcellatlas.ncl.ac.uk/datasets/liver_fdg_movie/) and example of animated force directed graph
 * the pipeline name is _write\_input.sh_
 * this processes and saves material to be used in the animation creation (a legend figure, a csv file mapping cell types to colours, PCA data and the shared nearest neighbour graph in sparse matrix format)
 * this pipeline does not take external arguments
