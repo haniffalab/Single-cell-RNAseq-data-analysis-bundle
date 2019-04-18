@@ -194,19 +194,20 @@ For smaller data sets the scripts can be run on a local station. In such cases o
  This is the template for building new pipelines compatible with the current bundle. It contains boiler plate code and can be used as the starting point for making new pipelines. It can handle any number of arguments, just place them in the arguments.list one on a line and ending with ".arg".
 
 ### seurat_from_count_tables.sh
- - used to compile a seurat object from Cellranger output
- - an example of runing this pipeline: qsub seurat_from_count_tables.sh 'organ="liver"; ProjectName="Liver10x"; save.at="liver_all.RDS"; sequencing.types="normal"; annotate.cells = T; identify.doublets = T; cell.type.SVM = "classifier_svm_cell_type_fetal_liver"; doublet.svm = "classifier_svm_doublets_fetal_liver"'
- - reads the file key.csv in the resources folder. From this it selects the data based on organ name and sequencing type
- - the seurat object is saved having the file name set by the argument save.at. The file will be saved in data folder
- - The arguments:
-   - @arg organ: string, name of the organ. Must exist in the key.csv file (e.g. liver, thymus)
-   - @arg ProjectName: string, passed to the project argument when creating the seurat object
-   - @arg save.at: string, file name for the seurat object to be save to. File extension must be RDS. The file will be saved in the data folder
-   - @arg sequencing.types: strings, can be 'normal' for 3' data or 5GEX for 5' data
-   - @arg annotate.cells: boolean, use a trained SVM to automatically annotated the data. Make sure you have a trained SVM before asking for automatic annotation
-   - @arg identify.doublets: boolean, use a doublet detector to flag doublets in the dataset
-   - @arg cell.type.SVM: string, name of the cell type classifier. The classifier must exit in the resources folder and should have been created with the pipeline train_classifier
-   - @arg doublet.svm: string, name of the doublet detector. The doublet detector must exist in the resource folder and should have been created with the pipeline train_doublets_classifier
+* used to compile a seurat object from Cellranger output
+* an example of runing this pipeline:\
+`qsub seurat_from_count_tables.sh 'organ="liver"; ProjectName="Liver10x"; save.at="liver_all.RDS"; sequencing.types="normal"; annotate.cells = T; identify.doublets = T; cell.type.SVM = "classifier_svm_cell_type_ftlliv"; doublet.svm = "classifier_svm_doublets_ftlliv"'`
+* reads the file _key.csv_ in the _resources_ folder. From this it selects the data based on organ name and sequencing type
+* the seurat object is saved having the file name set by the argument _save.at_. The file will be saved in _data_ folder
+* The arguments:
+   * @arg _organ_: string, name of the organ. Must exist in the key.csv file (e.g. liver, thymus)
+   * @arg _ProjectName_: string, passed to the project argument when creating the seurat object
+   * @arg _save.at_: string, file name for the seurat object to be save to. File extension must be RDS. The file will be saved in the data folder
+   * @arg _sequencing.types_: strings, can be 'normal' for 3' data or 5GEX for 5' data
+   * @arg _annotate.cells_: boolean, use a trained SVM to automatically annotated the data. Make sure you have a trained SVM before asking for automatic annotation
+   * @arg _identify.doublets_: boolean, use a doublet detector to flag doublets in the dataset
+   * @arg _cell.type.SVM_: string, name of the cell type classifier. The classifier must exit in the resources folder and should have been created with the pipeline _train\_classifier_
+   * @arg _doublet.svm_: string, name of the doublet detector. The doublet detector must exist in the resource folder and should have been created with the pipeline _train\_doublets\_classifier_
 
 ### make_cell_annotation_template.sh
  - make an annotation template for data stored in a seurat object.
