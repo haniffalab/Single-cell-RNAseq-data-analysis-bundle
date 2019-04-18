@@ -30,14 +30,14 @@ To run the pipelines you must download the entire bundle and transfer to a serve
 * subset the seurat object into singlets and doublets (_split\_seurat\_by\_category.sh_). It is advised to keep the doublets data (even if you have not further use for them) for future reference.
 * compute dimensionality reduction coordinates (_add\_dr.sh_)
 * make an annotation template and annotate (_make\_cell\_annotation\_template.sh_)
-* optional: annotation can be made a lot easier by plotting annotation assisting word clouds (_wordclouds.sh_) and making an interactive heat map (interactive heat map tool at  __Fast Portals__ _interactive\_heatmap\_dotplot_).
+* optional: annotation can be made a lot easier by plotting annotation assisting word clouds (_wordclouds.sh_) and making an interactive heat map (interactive heat map tool at  [__Fast Portals__](https://github.com/DoruMP/Fast-data-portals-for-scRNAseq-data) _interactive\_heatmap\_dotplot_).
 * important notice: it is highly advisable to use only alphanumeric characters in naming cell population. Some characters (e.g. "\\", "/") can create problems and raise errors with some pipelines. While many of these issues are solved for, it is still advisable as good practice to avoid fancy characters in naming. This is because it is imposible to predict all possible issues created by non-alphanumeric characters and even when they do trigger errors, the error messages are particularly vague in such situations. Here alpha-numeric is defined as the collection of Latin letters and Arabic digits.
 * update the annotation (_update\_annotation.sh_)
 * make all the apps that allow easy data exploration:
    * _plot\_dr.sh_ for interactive UMAP, FDG, tSNE and AGA; 
-   * __Fast Portals__ _interactive\_heatmap\_dotplot_ interactive heatmap but this time with the labels, not clusters; 
-   * __Fast Portals__ _web\_portal_ web portal tool for gene expression (you must have access to web server or alternatively set an Apache server on your local machine)
-   * __Fast Portals__ _gene\_grouping_ for gene expression patterns
+   * [__Fast Portals__](https://github.com/DoruMP/Fast-data-portals-for-scRNAseq-data) _interactive\_heatmap\_dotplot_ interactive heatmap but this time with the labels, not clusters; 
+   * [__Fast Portals__](https://github.com/DoruMP/Fast-data-portals-for-scRNAseq-data) _web\_portal_ web portal tool for gene expression (you must have access to web server or alternatively set an Apache server on your local machine)
+   * [__Fast Portals__](https://github.com/DoruMP/Fast-data-portals-for-scRNAseq-data) _gene\_grouping_ for gene expression patterns
    * _super\_markers.sh_ gets cell types signatures. You will understand the power of these signature when you input them in the interactive heat map (if you make one). This will be very useful for annotating new data, for supporting data annotation, for exploring expression patterns in new data sets or for designing new flow panels
    * optional: you could run again the word clouds because this also show DEGs as word clouds
    * optional: you could train a cell type classifier for fast integration of new data sets. However it is highly recommended that any published conclusions should be made on whole data annotation, not on classifiers results from this bundle (or any other type of machine learning classification/label propagations/projections made with tools that are not part of this bundle)
@@ -117,7 +117,7 @@ The _bunddle\_utils.R_:
     * @param `tool_addr` folder name were the bundle tools are stored. This function calls the _predict\_by_classifier/predict.py_ script to load the classifier and must be present in the tool.addr folder. Inside the pipelines this argument is already set but if you want to use this function in other scripts you must set the proper tool.addr
     * @param `python.addr` python address. This is pre-set in all pipelines but having this as an argument allows the user to re-use the function in other scripts and choose the python version
 * __make\_3D\_interactive\_page(data\_frame\_3D, tool\_addr, python.addr, save.to)__
-    * outdated since the web portal was created (see __Fast Portals__)
+    * outdated since the web portal was created (see [__Fast Portals__](https://github.com/DoruMP/Fast-data-portals-for-scRNAseq-data))
     * this function was used to create a 3D visualising html page. 
     * this function is the ancestor of the pseudotime web portal
     * this function is used by the _plot\_dr.sh_ pipeline to make a interactive tool for visualising diffusion map coordinates.
@@ -134,7 +134,7 @@ The _bunddle\_utils.R_:
     * @param `save.to` address to save the resulted interactive page
 * __create\_gene\_expression\_viewer\_apps(seurat.obj, dim.type = 'umap', save.to, tool\_addr, python.addr, categories.colours=NA)__
     * deprecated
-    * this has been replaced by the web portal creating tool (see __Fast Portals__)
+    * this has been replaced by the web portal creating tool (see [__Fast Portals__](https://github.com/DoruMP/Fast-data-portals-for-scRNAseq-data))
     * this can still be used by the pipeline _seurat\_to\_interactive\_gene\_expression.R_
     * this creates html interactive pages that allow data exploration for dimensional reduction plots and gene expression. However the data is embedded in the page so the results is heavy and will require time to load in a browser. It is not recommended to used the output on a web server. The output is useful for internal distribution of data. For other situation I recommend you use the web portal building tool.
 * __plot.indexed.legend(label.vector, color.vector, ncols = 2, left.limit = 3.4, symbol.size = 8, text.size = 10, padH = 1, padV = 1, padRight = 0)__
