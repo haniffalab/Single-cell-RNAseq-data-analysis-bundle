@@ -481,27 +481,31 @@ TRAV7
 ![wordcloud](wordcloud.png)
 
 ### update_annotation.sh
-  - used to update the annotations in a seurat object following manual annotation
-  - annotation should be kept in csv file. The empty template is produced by the make_cell_annotation_template.sh which requires only filling in the cluster assignment
-    - seurat.addr file name of the RDS object containing the input data as a seurat object. Must include only the file name not the path because the assumption is that data files are kept in the data folder.
-    - make.app boolean to make interactive page for visualising the annotated data. Usually not necessary as better alternatives have been made available since this pipelines was made (check plot_dr.sh and the web portal tool). Make sure dimensionality reduction has be computed before setting this argument to TRUE.
+* used to update the annotations in a seurat object following manual annotation
+* annotation should be kept in csv file. The empty template is produced by the _make\_cell\_annotation\_template.sh_ which requires only filling in the cluster assignment
+* the arguments:
+    * _seurat.addr_ file name of the RDS object containing the input data as a seurat object. Must include only the file name not the path because the assumption is that data files are kept in _data_ folder.
+    * _make.app_ boolean to make interactive page for visualising the annotated data. Usually not necessary as better alternatives have been made available since this pipelines was made (check _plot\_dr.sh_ and the web portal tool). Make sure dimensionality reduction has be computed before setting this argument to `TRUE`
 
 ### cell_comparison.sh
-  - make 1-to-1 comparison between cell types with the same data sets or between 2 data sets
-  - comparisons include correlation plots, AGA score plots and DEGs for each comparison
-    - seurat.query.addr query data (same format as the argument seurat.addr in other pipelines)
-    - seurat.ref.addr reference data (same format as the argument seurat.addr in other pipelines). This can have the same value as seurat.query.addr if the reference cell types and query cell types come from the same data set
-    - set.ident.query query set identification meta data column (same format as the argument set.ident in other pipeliens)
-    - set.ident.ref reference set identification meta data columns (same format as the argument set.ident in other pipeliens)
-    - cell.types.query query cell types (same format as cell.types in other pipelines)
-    - cell.types.ref reference cell types (same format as cell.types in other pipelines)
-    - dims.plot width and height in inches for the correlation and AGA plots
-    - compute.DEGs boolean to compute DEG and plot them as jitter plots
+* makes 1-to-1 comparison between cell types with the same data sets or between 2 data sets
+* comparisons include correlation plots, AGA score plots and DEGs for each comparison
+* the arguments:
+    * _seurat.query.addr_ query data (same format as the argument seurat.addr in other pipelines)
+    * _seurat.ref.addr_ reference data (same format as the argument seurat.addr in other pipelines). This can have the same value as seurat.query.addr if the reference cell types and query cell types come from the same data set
+    * _set.ident.query_ query set identification meta data column (same format as the argument set.ident in other pipeliens)
+    * _set.ident.ref_ reference set identification meta data columns (same format as the argument set.ident in other pipeliens)
+    * _cell.types.query_ query cell types (same format as cell.types in other pipelines)
+    * _cell.types.ref_ reference cell types (same format as cell.types in other pipelines)
+    * _dims.plot_ width and height in inches for the correlation and AGA plots
+    * _compute.DEGs_ boolean to compute DEG and plot them as jitter plots
 
 ### super_markers.sh
-  - selects and order DEGs most specific for each cell population in the data set
-  - the result are cell type signatures i.e. list of genes highly relevant for cell annotations
-  - this script has only one argument to set: seurat.addr which follot the same format as in other pipelines
-  - set.ident is set to "cell.labels". Change this to what is relevant for your project if: either you are not interested in cell type signatures or the cell annotations are not kept in the "cell.labels" meta data column (this might be the case if you have not started data analysis with this bundle)
+* selects and order DEGs most specific for each cell population in the data set
+* the result are cell type signatures i.e. list of genes highly relevant for cell annotations
+* this script has only one argument to set: _seurat.addr_ which follot the same format as in other pipelines
+* _set.ident_ is set to `"cell.labels"`. Change this to what is relevant for your project if: either you are not interested in cell type signatures or the cell annotations are not kept in the `"cell.labels"` meta data column (this might be the case if you have not started data analysis with this bundle)
+* see the image for an example of plotted truncated signature (for B cells) obtained using this pipeline:\
+![signatureexample](signature.png)
   
   
