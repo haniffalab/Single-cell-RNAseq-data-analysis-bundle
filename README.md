@@ -18,7 +18,7 @@ The bundle includes:
 * creating animated force directed graphs
 * handling big data sets as Seurat objects
  
-To create mode advanced data exploration apps and web portal(s) visit https://github.com/DoruMP/Fast-data-portals-for-scRNAseq-data. This repository will be referred in this documentation as __Fast Portals__.
+To create mode advanced data exploration apps and web portal(s) visit https://github.com/DoruMP/Fast-data-portals-for-scRNAseq-data. This repository will be referred in this documentation as [__Fast Portals__](https://github.com/DoruMP/Fast-data-portals-for-scRNAseq-data).
 
 To run the pipelines you must download the entire bundle and transfer to a server/personal computer. The folder structure must be kept as it is.
 
