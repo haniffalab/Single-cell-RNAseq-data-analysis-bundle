@@ -371,16 +371,20 @@ TRAV7
     * _runAGA_ boolean to run AGA
 
 ### gene_discriminatory_power_analysis.sh
-  - this pipeline trains a random forest for classifying cell labels in a seurat object using a set of gene names
-  - it was created to assess discriminatory power of gene sets using a random forest classification report
-  - the random forest was chosen for this purpose due the partial similarities between it classifying mechanism and flow sorting
-  - this is a not a pipeline for training classifiers. if that's what you need check train_classifier.sh pipeline
-    - seurat.addr file name of the RDS object containing the input data as a seurat object. Must include only the file name not the path because the assumption is that data files are kept in the data folder.
-    - feature_genes name of file that must be found in the resource folder and to contain one gene name per line
-    - cell.types name of file found in resource folder and contains one cell type per line
-    - save.to.dir name of folder to save results
-    - ident.set name of column in meta data to used for partitioning the data
-    - type.to.colours name of csv file found in the resource folder that contains the cell type to colour mapping. To generate colour key compatibly with the single cell analysis bundle check the interactive tool color_management.html
+* this pipeline trains a random forest for classifying cell labels in a seurat object using a set of gene names
+* it was created to assess discriminatory power of gene sets using a random forest classification report
+* the random forest was chosen for this purpose due the partial similarities between it classifying mechanism and flow sorting
+* this is a not a pipeline for training classifiers. if that's what you need check _train\_classifier.sh_ pipeline
+* an example of runing this pipeline:\
+`qsub gene_discriminatory_power_analysis.sh 'seurat.addr = "data_scseq.RDS"; feature_genes = "fname_with_gene_names"; cell.types = "fname_with_cell_types"; save.to.dir = "gene_power"; ident.set = "validated.cell.labels"; type.to.colours = "colorkey_fname";'`
+* the arguments:
+    * _seurat.addr_ file name of the RDS object containing the input data as a seurat object. Must include only the file name not the path because the assumption is that data files are kept in _data_ folder.
+    * _feature\_genes_ name of file that must be found in _resource_ folder and to contain one gene name per line
+    * _cell.types_ name of file found in _resource_ folder and contains one cell type per line
+    * _save.to.dir_ name of folder to save results
+    * _ident.set_ name of column in meta data to used for partitioning the data
+    * _type.to.colours_ name of csv file found in _resource_ folder that contains the cell type to colour mapping. To generate colour key compatibly with the single cell analysis bundle check the interactive tool _color\_management.html_
+* see _violin\_plots.sh_ and the _resource_ folder for examples of feature genes and cell types file formats
 
 ### pseudotime.sh
   - used for trajectory analysis
