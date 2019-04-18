@@ -507,6 +507,6 @@ TRAV7
 * this script has only one argument to set: _seurat.addr_ which follot the same format as in other pipelines
 * _set.ident_ is set to `"cell.labels"`. Change this to what is relevant for your project if: either you are not interested in cell type signatures or the cell annotations are not kept in the `"cell.labels"` meta data column (this might be the case if you have not started data analysis with this bundle)
 * see the image for an example of plotted truncated signature (for B cells) obtained using this pipeline:\
-![signatureexample](signature.png){:height="50%" width="50%"}
+![signatureexample](signature.png)
   
   
