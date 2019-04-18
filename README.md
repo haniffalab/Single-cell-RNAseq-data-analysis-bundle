@@ -47,32 +47,32 @@ To run the pipelines you must download the entire bundle and transfer to a serve
 ## Prerequisites
 
 Python version 3.6
- > pandas 0.22.0[space][space]
- pptx 0.6.9[space][space]
- patsy 0.5.0[space][space]
- scanpy 1.2.2[space][space]
- sklearn 0.19.1[space][space]
- numpy 1.14.2[space][space]
- scipy 1.0.0[space][space]
- umap 0.2.3[space][space]
+>pandas 0.22.0
+>pptx 0.6.9
+>patsy 0.5.0
+>scanpy 1.2.2
+>sklearn 0.19.1
+>numpy 1.14.2
+>scipy 1.0.0
+>umap 0.2.3
  
 R version 3.4.2
- > Seurat 2.3.4[space][space]
- dplyr 0.7.6[space][space]
- reshape 0.8.8[space][space]
- plyr 1.8.4[space][space]
- ggplot2 3.0.0[space][space]
- RColorBrewer 1.1.2[space][space]
- BiocParallel 1.12.0[space][space]
- gridExtra 2.3[space][space]
- grid 3.4.2[space][space]
- sva 3.26.0[space][space]
- destiny 2.6.2[space][space]
- ggplot2 3.0.0[space][space]
- monocle 2.6.4[space][space]
- harmony 0.1.0[space][space]
- methods 3.4.2[space][space]
- utils 3.4.2[space][space]
+>Seurat 2.3.4
+>dplyr 0.7.6
+>reshape 0.8.8
+>plyr 1.8.4
+>ggplot2 3.0.0
+>RColorBrewer 1.1.2
+>BiocParallel 1.12.0
+>gridExtra 2.3
+>grid 3.4.2
+>sva 3.26.0
+>destiny 2.6.2
+ ggplot2 3.0.0
+ monocle 2.6.4
+ harmony 0.1.0
+ methods 3.4.2
+ utils 3.4.2
  wordcloud 2.6
  
  ## Structure
@@ -106,7 +106,7 @@ The _bunddle\_utils.R_:
 * __RunUMAP(pca.df, tool\_addr, python.addr)__
     * computes umap coordinates. Currently Seurat packages has published a function with same name that computs UMAP coordinates on a seurat object. However the RunUMAP in this bundle is more flexible and can be used not just on a seurat object. This function is the fastest dimension reduction method (compared to PCA, tSNE and FDG).
     * @param `pca.df` the input data frame with variables as columns. In the pipeline this is used on the pca coordinates of a seurat object which can be retrieved at `seurat.obj@dr$pca@cell.embeddings`. The function is very flexible due to this input and can used on many types data formats not limited to a seurat object. Further flexibility of this function comes from the fact that other embeddings can be used besides pca (e.g. batch corrected pca stored at `seurat.obj@dr$harmony@cell.embeddings`).
-    * @param `tool_addr` folder name were the bundle tools are stored. this function use _umap/umap\_compute.py_ stored in the tools folder to compute the umap coordinates.
+    * @param `tool_addr` folder name were the bundle tools are stored. this function uses _umap/umap\_compute.py_ stored in the tools folder to compute the umap coordinates.
     * @param `python.addr` python address. This is pre-set in all pipelines but having this as an argument allows the user to re-use the function in other scripts and choose the python version
 * __Apply\_Classifier\_On\_Seurat\_Object(seurat.obj, classifier.fname, tool\_addr, python.addr)__
     * this function applies an SVM classifier to the seurat objects and outputs predictions as a character vector;
