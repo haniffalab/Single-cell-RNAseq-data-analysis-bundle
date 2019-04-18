@@ -345,10 +345,13 @@ TRAV7
 ```
 
 ### seurat_to_interactive_gene_expression.sh
-  - before considering using this you should know that the web portal tool might be a better option
-  - this pipeline creates an interactive app that allows data exploration in a browser. Part of its limitations is that it shows only the variable genes and that expression data is embedded in the interactive page making it heavy and requiring time to load in a browser. The web portal tool has a further advantage in that it can build portals from both Seurat and Scanpy objects. However if all you need is to share a data exploration app with your team members or collaborators without disclosing data before publication this might be the pipeline for you.
-    - seurat.addr file name of the RDS object containing the input data as a seurat object. Must include only the file name not the path because the assumption is that data files are kept in the data folder.
-    - dim.type dimensionallity reduction type to be used in the resulted app (e.g. tsne, umap, fdg). Must exist in the @dr slot of the seurat objects, otherwise it will raise error and kill the process. You can use the add_dr.sh pipeline prior to this if you are not sure.
+* before considering using this you should know that the web portal tool might be a better option (see [__Fast Portals__](https://github.com/DoruMP/Fast-data-portals-for-scRNAseq-data))
+* this pipeline creates an interactive app that allows data exploration in a browser. Part of its limitations is that it shows only the variable genes and that expression data is embedded in the interactive page making it heavy and requiring time to load in a browser. The web portal tool has a further advantage in that it can build portals from both Seurat and Scanpy objects. However if all you need is to share a data exploration app with your team members or collaborators without disclosing data before publication this might be the pipeline for you
+* an example of runing this pipeline:\
+`qsub seurat_to_interactive_gene_expression.sh 'seurat.addr = "data_scseq.RDS"; dim.type = "umap";'`
+* the arguments:
+    * _seurat.addr_ file name of the RDS object containing the input data as a seurat object. Must include only the file name not the path because the assumption is that data files are kept in _data_ folder.
+    * _dim.type_ dimensionality reduction type to be used in the resulted app (e.g. tsne, umap, fdg). Must exist in the `@dr` slot of the seurat objects, otherwise it will raise error and kill the process. You can use the _add\_dr.sh_ pipeline prior to this if you are not sure
 
 ### plot_dr.sh
   - pipeline used to plot all dimensionally coordinates and colour the points by any column in the meta data
