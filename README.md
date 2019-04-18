@@ -48,55 +48,32 @@ To run the pipelines you must download the entire bundle and transfer to a serve
 
 Python version 3.6
  > pandas 0.22.0
- 
- > pptx 0.6.9
- 
- > patsy 0.5.0
- 
- > scanpy 1.2.2
- 
- > sklearn 0.19.1
- 
- > numpy 1.14.2
- 
- > scipy 1.0.0
- 
- > umap 0.2.3
+ pptx 0.6.9
+ patsy 0.5.0
+ scanpy 1.2.2
+ sklearn 0.19.1
+ numpy 1.14.2
+ scipy 1.0.0
+ umap 0.2.3
  
 R version 3.4.2
  > Seurat 2.3.4
- 
- > dplyr 0.7.6
- 
- > reshape 0.8.8
- 
- > plyr 1.8.4
- 
- > ggplot2 3.0.0
- 
- > RColorBrewer 1.1.2
- 
- > BiocParallel 1.12.0
- 
- > gridExtra 2.3
- 
- > grid 3.4.2
- 
- > sva 3.26.0
- 
- > destiny 2.6.2
- 
- > ggplot2 3.0.0
- 
- > monocle 2.6.4
- 
- > harmony 0.1.0
- 
- > methods 3.4.2
- 
- > utils 3.4.2
- 
- > wordcloud 2.6
+ dplyr 0.7.6
+ reshape 0.8.8
+ plyr 1.8.4
+ ggplot2 3.0.0
+ RColorBrewer 1.1.2
+ BiocParallel 1.12.0
+ gridExtra 2.3
+ grid 3.4.2
+ sva 3.26.0
+ destiny 2.6.2
+ ggplot2 3.0.0
+ monocle 2.6.4
+ harmony 0.1.0
+ methods 3.4.2
+ utils 3.4.2
+ wordcloud 2.6
  
  ## Structure
  
@@ -120,71 +97,71 @@ The functions in the _bunddle\_utils.R_ can be used in new pipelines or in custo
 The _bunddle\_utils.R_:
 * declares the tool.addr and python.addr variables. Change the python.addr if you want to use a different python version for your work but make sure first that the version you are trying to use has installed all the required packages.
 * the functions _runFDG_, _RunUMAP_ are used to compute force-directed graph and UMAP coordinates for a seurat object. Although currently Seurat package has a function to compute UMAP which goes by the same name, the function in this bundle was created before Seurat published its umap computing function. Both the in-house and the Seurat RunUMAP functions do the same thing but because the bundle was build before Seurat had the ability to compute UMAP it is recomended to use the RunUMAP from the _bunddle\_utils.R_ script with the current bundle for compatibility reasons.
-* _runFDG(pca.df, snn, iterations = 600, tool\_addr, python.addr)_
+* __runFDG(pca.df, snn, iterations = 600, tool\_addr, python.addr)__
     * computes force directed coordinates on a seurat object. This function requires time and computation resources for big data sets.
-    * @param pca.df the input data frame with variables as columns. In the pipeline this is used on the pca coordinates of a seurat object which can be retrieved at `seurat.obj@dr$pca@cell.embeddings`. The function is very flexible due to this input and can used on many types data formats not limited to a seurat object. Further flexibility of this function comes from the fact that other embeddings can be used besides pca (e.g. batch corrected pca stored at `seurat.obj@dr$harmony@cell.embeddings`).
-    * @param snn shared nearest neighbor graph. In a seurat object this is available at `seurat.obj@snn`. If you want to use this function outside a pipeline you must make sure that the snn has been computed on the seurat object or if you are not using a seurat object you must computed using other available tools. You must pay attention to seurat object subsetting which as of writing this documentation does not recompute the snn.
-    * @param tool\_addr folder name were the bundle tools are stored. this function uses _force\_abstract\_graph/make\_fdg.py_ for the actual computations. If you need to use this function outside the pipelines you must make sure you have this script and set the tool.addr argument properly. 
-    * @param python.addr python address. This is pre-set in all pipelines but having this as an argument allows the user to re-use the function in other scripts and choose the python version
-* _RunUMAP(pca.df, tool\_addr, python.addr)_
+    * @param _pca.df_ the input data frame with variables as columns. In the pipeline this is used on the pca coordinates of a seurat object which can be retrieved at `seurat.obj@dr$pca@cell.embeddings`. The function is very flexible due to this input and can used on many types data formats not limited to a seurat object. Further flexibility of this function comes from the fact that other embeddings can be used besides pca (e.g. batch corrected pca stored at `seurat.obj@dr$harmony@cell.embeddings`).
+    * @param _snn_ shared nearest neighbor graph. In a seurat object this is available at `seurat.obj@snn`. If you want to use this function outside a pipeline you must make sure that the snn has been computed on the seurat object or if you are not using a seurat object you must computed using other available tools. You must pay attention to seurat object subsetting which as of writing this documentation does not recompute the snn.
+    * @param _tool\_addr_ folder name were the bundle tools are stored. this function uses _force\_abstract\_graph/make\_fdg.py_ for the actual computations. If you need to use this function outside the pipelines you must make sure you have this script and set the tool.addr argument properly. 
+    * @param _python.addr_ python address. This is pre-set in all pipelines but having this as an argument allows the user to re-use the function in other scripts and choose the python version
+* __RunUMAP(pca.df, tool\_addr, python.addr)__
     * computes umap coordinates. Currently Seurat packages has published a function with same name that computs UMAP coordinates on a seurat object. However the RunUMAP in this bundle is more flexible and can be used not just on a seurat object. This function is the fastest dimension reduction method (compared to PCA, tSNE and FDG).
-    * @param pca.df the input data frame with variables as columns. In the pipeline this is used on the pca coordinates of a seurat object which can be retrieved at `seurat.obj@dr$pca@cell.embeddings`. The function is very flexible due to this input and can used on many types data formats not limited to a seurat object. Further flexibility of this function comes from the fact that other embeddings can be used besides pca (e.g. batch corrected pca stored at `seurat.obj@dr$harmony@cell.embeddings`).
-    * @param tool\_addr folder name were the bundle tools are stored. this function use _umap/umap\_compute.py_ stored in the tools folder to compute the umap coordinates.
-    * @param python.addr python address. This is pre-set in all pipelines but having this as an argument allows the user to re-use the function in other scripts and choose the python version
-* _Apply\_Classifier\_On\_Seurat\_Object(seurat.obj, classifier.fname, tool\_addr, python.addr)_
+    * @param _pca.df_ the input data frame with variables as columns. In the pipeline this is used on the pca coordinates of a seurat object which can be retrieved at `seurat.obj@dr$pca@cell.embeddings`. The function is very flexible due to this input and can used on many types data formats not limited to a seurat object. Further flexibility of this function comes from the fact that other embeddings can be used besides pca (e.g. batch corrected pca stored at `seurat.obj@dr$harmony@cell.embeddings`).
+    * @param _tool\_addr_ folder name were the bundle tools are stored. this function use _umap/umap\_compute.py_ stored in the tools folder to compute the umap coordinates.
+    * @param _python.addr_ python address. This is pre-set in all pipelines but having this as an argument allows the user to re-use the function in other scripts and choose the python version
+* __Apply\_Classifier\_On\_Seurat\_Object(seurat.obj, classifier.fname, tool\_addr, python.addr)__
     * this function applies an SVM classifier to the seurat objects and outputs predictions as a character vector;
     * the predictions can be added to the meta-data of the seurat objects
     * can be used to predict cell types or doublets. Make sure that the cell type classifier or doublet detector is relevant for the data you want to predict (e.g. do not use a thymus cell type classifier on spleen)
-    * @param seurat.obj name of seurat object - data must be normalized before applying the function
-    * @param classifier.fname folder name were the classifier is stored. cell type classifier are trained with the _train\_classifier.sh_ pipeline and doublet detectors are obtained with _train\_doublets\_classifier.sh pipeline_;
-    * @param tool\_addr folder name were the bundle tools are stored. This function calls the _predict\_by_classifier/predict.py_ script to load the classifier and must be present in the tool.addr folder. Inside the pipelines this argument is already set but if you want to use this function in other scripts you must set the proper tool.addr
-    * @param python.addr python address. This is pre-set in all pipelines but having this as an argument allows the user to re-use the function in other scripts and choose the python version
-* _make\_3D\_interactive\_page(data\_frame\_3D, tool\_addr, python.addr, save.to)_
+    * @param _seurat.obj_ name of seurat object - data must be normalized before applying the function
+    * @param _classifier.fname_ folder name were the classifier is stored. cell type classifier are trained with the _train\_classifier.sh_ pipeline and doublet detectors are obtained with _train\_doublets\_classifier.sh pipeline_;
+    * @param _tool\_addr_ folder name were the bundle tools are stored. This function calls the _predict\_by_classifier/predict.py_ script to load the classifier and must be present in the tool.addr folder. Inside the pipelines this argument is already set but if you want to use this function in other scripts you must set the proper tool.addr
+    * @param _python.addr_ python address. This is pre-set in all pipelines but having this as an argument allows the user to re-use the function in other scripts and choose the python version
+* __make\_3D\_interactive\_page(data\_frame\_3D, tool\_addr, python.addr, save.to)__
     * outdated since the web portal was created (see __Fast Portals__)
     * this function was used to create a 3D visualising html page. 
     * this function is the ancestor of the pseudotime web portal
     * this function is used by the _plot\_dr.sh_ pipeline to make a interactive tool for visualising diffusion map coordinates.
     * It can also used outside the pipeline to visualize other types of three-dimensional data sets (3D UMAP, 3D FDG, 3D tSNE) but this will be to be pre-computed
-    * @param data\_frame\_3D data frame with the 3 dimensions in the first 3 columns, colours as hexdecimals in the forth columns and cell labels in 5th columns which must be named "Labels". The names of the other columns are not important. Make sue you do not have non-alphanumeric character in the labels (e.g. /, \, @ etc.) which can cause issues with the output.
-    * @param tool\_addr folder name were the bundle tools are stored. This function uses _interactive\_3D_viewer/html_WebGL\_3D\_viewer.py_ script which must be found in the tools folder. The function can be used outside the pipelines by setting the tool\_addr argument.
-    * @param python.addr python address. This is pre-set in all pipelines but having this as an argument allows the user to re-use the function in other scripts and choose the python version
-    * @param address to save the resulted interactive page
-* _make\_2D\_interactive\_page(data\_frame\_2D, tool\_addr, python.addr, save.to="./")_
+    * @param _data\_frame\_3D_ data frame with the 3 dimensions in the first 3 columns, colours as hexdecimals in the forth columns and cell labels in 5th columns which must be named "Labels". The names of the other columns are not important. Make sue you do not have non-alphanumeric character in the labels (e.g. /, \, @ etc.) which can cause issues with the output.
+    * @param _tool\_addr_ folder name were the bundle tools are stored. This function uses _interactive\_3D_viewer/html_WebGL\_3D\_viewer.py_ script which must be found in the tools folder. The function can be used outside the pipelines by setting the tool\_addr argument.
+    * @param _python.addr_ python address. This is pre-set in all pipelines but having this as an argument allows the user to re-use the function in other scripts and choose the python version
+    * @param _save.to_ address to save the resulted interactive page
+* __make\_2D\_interactive\_page(data\_frame\_2D, tool\_addr, python.addr, save.to="./")__
     * this functions is similar to _make\_3D\_interactive\_page_ and it produces and interactive html page for vizualizing 2D data (UMAP, tSNE, FDG)
-    * @param data\_frame\_2D has similar formating with the parameter data\_frame\_3D in function make\_3D\_interactive\_page the difference being that it features only two dimensions
-    * @param tool\_addr folder name were the bundle tools are stored. This function uses interactive\_2D\_viewer/html\_WebGL\_2D\_viewer.py script which be found in the tools folder.
-    * @param python.addr python address. This is pre-set in all pipelines but having this as an argument allows the user to re-use the function in other scripts and choose the python version
-    * @param address to save the resulted interactive page
-* _create\_gene\_expression\_viewer\_apps(seurat.obj, dim.type = 'umap', save.to, tool\_addr, python.addr, categories.colours=NA)_
+    * @param _data\_frame\_2D_ has similar formating with the parameter data\_frame\_3D in function make\_3D\_interactive\_page the difference being that it features only two dimensions
+    * @param _tool\_addr_ folder name were the bundle tools are stored. This function uses interactive\_2D\_viewer/html\_WebGL\_2D\_viewer.py script which be found in the tools folder.
+    * @param _python.addr_ python address. This is pre-set in all pipelines but having this as an argument allows the user to re-use the function in other scripts and choose the python version
+    * @param _save.to_ address to save the resulted interactive page
+* __create\_gene\_expression\_viewer\_apps(seurat.obj, dim.type = 'umap', save.to, tool\_addr, python.addr, categories.colours=NA)__
     * deprecated
     * this has been replaced by the web portal creating tool (see __Fast Portals__)
     * this can still be used by the pipeline _seurat\_to\_interactive\_gene\_expression.R_
     * this creates html interactive pages that allow data exploration for dimensional reduction plots and gene expression. However the data is embedded in the page so the results is heavy and will require time to load in a browser. It is not recommended to used the output on a web server. The output is useful for internal distribution of data. For other situation I recommend you use the web portal building tool.
-* _plot.indexed.legend(label.vector, color.vector, ncols = 2, left.limit = 3.4, symbol.size = 8, text.size = 10, padH = 1, padV = 1, padRight = 0)_
+* __plot.indexed.legend(label.vector, color.vector, ncols = 2, left.limit = 3.4, symbol.size = 8, text.size = 10, padH = 1, padV = 1, padRight = 0)__
     * function that creates a legend pdf file to be used with dimension reduction plots
     * this function is called in _plot\_dr.sh_
-    * @param label.vector a character vector with the cell labels
-    * @param color.vector a character vector with the colors for the labels written in hexdecimal format. hexdecimal colour keys can be created using the interactive tool _color\_management.html_
-    * @param ncols number of columns to arrange the labels in the legend
-    * @param left.limit left padding
-    * @param symbol.size symbol size
-    * @param text.size text size
-    * @param padH horizontal padding
-    * @param padV vertical padding
-    * @param padRight right padding
-* _dr.plot(point.labels, dr1, dr2, dr1.name, dr2.name, no.legend = F, plt.lb.sz = 5, txt.lb.size = 3, pt.size = .2, random\_state = 2, use.cols = NULL, use.labels = NULL, limits = NULL, annotate.plot = T, index.map = NA)_
+    * @param _label.vector_ a character vector with the cell labels
+    * @param _color.vector_ a character vector with the colors for the labels written in hexdecimal format. hexdecimal colour keys can be created using the interactive tool _color\_management.html_
+    * @param _ncols_ number of columns to arrange the labels in the legend
+    * @param _left.limit_ left padding
+    * @param _symbol.size_ symbol size
+    * @param _text.size_ text size
+    * @param _padH_ horizontal padding
+    * @param _padV_ vertical padding
+    * @param _padRight_ right padding
+* __dr.plot(point.labels, dr1, dr2, dr1.name, dr2.name, no.legend = F, plt.lb.sz = 5, txt.lb.size = 3, pt.size = .2, random\_state = 2, use.cols = NULL, use.labels = NULL, limits = NULL, annotate.plot = T, index.map = NA)__
     * function used to plot dimensionality reduced coordinates (e.g. tSNE, UMAP)
-    * @param point.labels character vector of all labels in the data set
-    * @param dr1 numeric vector of first dimension coordinates
-    * @param dr2 numeric vector of second dimension coordinates
-    * @param no.legend boolean indicating if to plot the legend inside the final plot. Sometimes it is desirable to plot the legend separatly to allow for more flexibility in arranging figure panels. In this case set this argument to FALSE and use plot.indexed.legend to create a separate legend figure
-    * @param plt.lb.sz label size
-    * @param txt.lb.size text label size
-    * @param pt.size point size
-    * @param random_state used for generating repeatable random colours when colours are not available
-    * @param use.cols if null, then generate colours randomly
-    * @param use.labels vector of labels
-    * @param limits plot limits
-    * @param annotate.plot boolean to indicate if plot should be annotated by with indices
-    * @param index.map either a NA type or a numeric vector to set the indices of each label
+    * @param _point.labels_ character vector of all labels in the data set
+    * @param _dr1_ numeric vector of first dimension coordinates
+    * @param _dr2_ numeric vector of second dimension coordinates
+    * @param _no.legend_ boolean indicating if to plot the legend inside the final plot. Sometimes it is desirable to plot the legend separatly to allow for more flexibility in arranging figure panels. In this case set this argument to FALSE and use plot.indexed.legend to create a separate legend figure
+    * @param _plt.lb.sz_ label size
+    * @param _txt.lb.size_ text label size
+    * @param _pt.size_ point size
+    * @param _random\_state_ used for generating repeatable random colours when colours are not available
+    * @param _use.cols_ if null, then generate colours randomly
+    * @param _use.labels_ vector of labels
+    * @param _limits_ plot limits
+    * @param _annotate.plot_ boolean to indicate if plot should be annotated by with indices
+    * @param _index.map_ either a NA type or a numeric vector to set the indices of each label
  
