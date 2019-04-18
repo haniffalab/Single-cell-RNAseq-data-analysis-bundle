@@ -48,31 +48,54 @@ To run the pipelines you must download the entire bundle and transfer to a serve
 
 Python version 3.6
  > pandas 0.22.0
+ 
  > pptx 0.6.9
+ 
  > patsy 0.5.0
+ 
  > scanpy 1.2.2
+ 
  > sklearn 0.19.1
+ 
  > numpy 1.14.2
+ 
  > scipy 1.0.0
+ 
  > umap 0.2.3
  
 R version 3.4.2
  > Seurat 2.3.4
+ 
  > dplyr 0.7.6
+ 
  > reshape 0.8.8
+ 
  > plyr 1.8.4
+ 
  > ggplot2 3.0.0
+ 
  > RColorBrewer 1.1.2
+ 
  > BiocParallel 1.12.0
+ 
  > gridExtra 2.3
+ 
  > grid 3.4.2
+ 
  > sva 3.26.0
+ 
  > destiny 2.6.2
+ 
  > ggplot2 3.0.0
+ 
  > monocle 2.6.4
+ 
  > harmony 0.1.0
+ 
  > methods 3.4.2
+ 
  > utils 3.4.2
+ 
  > wordcloud 2.6
  
  ## Structure
@@ -99,13 +122,13 @@ The _bunddle\_utils.R_:
 * the functions _runFDG_, _RunUMAP_ are used to compute force-directed graph and UMAP coordinates for a seurat object. Although currently Seurat package has a function to compute UMAP which goes by the same name, the function in this bundle was created before Seurat published its umap computing function. Both the in-house and the Seurat RunUMAP functions do the same thing but because the bundle was build before Seurat had the ability to compute UMAP it is recomended to use the RunUMAP from the _bunddle\_utils.R_ script with the current bundle for compatibility reasons.
 * _runFDG(pca.df, snn, iterations = 600, tool\_addr, python.addr)_
     * computes force directed coordinates on a seurat object. This function requires time and computation resources for big data sets.
-    * @param pca.df the input data frame with variables as columns. In the pipeline this is used on the pca coordinates of a seurat object which can be retrieved at seurat.obj@dr$pca@cell.embeddings. The function is very flexible due to this input and can used on many types data formats not limited to a seurat object. Further flexibility of this function comes from the fact that other embeddings can be used besides pca (e.g. batch corrected pca stored at seurat.obj@dr$harmony@cell.embeddings).
-    * *@param snn shared nearest neighbor graph. In a seurat object this is available at seurat.obj@snn. If you want to use this function outside a pipeline you must make sure that the snn has been computed on the seurat object or if you are not using a seurat object you must computed using other available tools. You must pay attention to seurat object subsetting which as of writing this documentation does not recompute the snn.
+    * @param pca.df the input data frame with variables as columns. In the pipeline this is used on the pca coordinates of a seurat object which can be retrieved at `seurat.obj@dr$pca@cell.embeddings`. The function is very flexible due to this input and can used on many types data formats not limited to a seurat object. Further flexibility of this function comes from the fact that other embeddings can be used besides pca (e.g. batch corrected pca stored at `seurat.obj@dr$harmony@cell.embeddings`).
+    * @param snn shared nearest neighbor graph. In a seurat object this is available at `seurat.obj@snn`. If you want to use this function outside a pipeline you must make sure that the snn has been computed on the seurat object or if you are not using a seurat object you must computed using other available tools. You must pay attention to seurat object subsetting which as of writing this documentation does not recompute the snn.
     * @param tool\_addr folder name were the bundle tools are stored. this function uses _force\_abstract\_graph/make\_fdg.py_ for the actual computations. If you need to use this function outside the pipelines you must make sure you have this script and set the tool.addr argument properly. 
     * @param python.addr python address. This is pre-set in all pipelines but having this as an argument allows the user to re-use the function in other scripts and choose the python version
 * _RunUMAP(pca.df, tool\_addr, python.addr)_
     * computes umap coordinates. Currently Seurat packages has published a function with same name that computs UMAP coordinates on a seurat object. However the RunUMAP in this bundle is more flexible and can be used not just on a seurat object. This function is the fastest dimension reduction method (compared to PCA, tSNE and FDG).
-    * @param pca.df the input data frame with variables as columns. In the pipeline this is used on the pca coordinates of a seurat object which can be retrieved at seurat.obj@dr$pca@cell.embeddings. The function is very flexible due to this input and can used on many types data formats not limited to a seurat object. Further flexibility of this function comes from the fact that other embeddings can be used besides pca (e.g. batch corrected pca stored at seurat.obj@dr$harmony@cell.embeddings).
+    * @param pca.df the input data frame with variables as columns. In the pipeline this is used on the pca coordinates of a seurat object which can be retrieved at `seurat.obj@dr$pca@cell.embeddings`. The function is very flexible due to this input and can used on many types data formats not limited to a seurat object. Further flexibility of this function comes from the fact that other embeddings can be used besides pca (e.g. batch corrected pca stored at `seurat.obj@dr$harmony@cell.embeddings`).
     * @param tool\_addr folder name were the bundle tools are stored. this function use _umap/umap\_compute.py_ stored in the tools folder to compute the umap coordinates.
     * @param python.addr python address. This is pre-set in all pipelines but having this as an argument allows the user to re-use the function in other scripts and choose the python version
 * _Apply\_Classifier\_On\_Seurat\_Object(seurat.obj, classifier.fname, tool\_addr, python.addr)_
