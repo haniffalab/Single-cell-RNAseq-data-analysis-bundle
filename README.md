@@ -322,15 +322,27 @@ TNFSF12
 ```
 
 ### gene_heatmap_and_spotplot.sh
-  - plots a heat map and a dot plot using selected gene names and cell types from a seurat object
-    - seurat.addr file name of the RDS object containing the input data as a seurat object. Must include only the file name not the path because the assumption is that data files are kept in the data folder.
-    - set.ident meta data column to set the identity of cells
-    - genes.to.plot name of file that must be found in the resource folder and to contain one gene name per line
-    - cell.types indicate what categories to include in the violin plot. If set to "all" it will use all the categories. If a subset of categories is desired you must pass the file name that exits in the resource folder and contain one category name per line.
-    - cluster.gene boolean if cluster genes
-    - diagonalize boolean if diagnolize genes (i.e. placing highest values in each row closer to the diagonal to make for better vizualisation).
-    - plot.dims numeric vector containing the widths and heights of the heat map and dot plot respectively
-    - save.gene.order this is useful if the ordering of genes from diagonalization and/or clustering has created good visualisation and the user needs to store the ordered genes for future plots of the same gene set
+* plots a heat map and a dot plot using selected gene names and cell types from a seurat object
+* an example of runing this pipeline:\
+`qsub gene_heatmap_and_spotplot.sh 'seurat.addr = "data_scseq.RDS"; set.ident = "cell.labels"; genes.to.plot = "fname_genes"; cell.types = "fname_with_labels"; cluster.genes = T; diagonalize = F; plot.dims = c(10, 10, 10, 10); save.gene.order = T;'`
+* the arguments:
+    * _seurat.addr_ file name of the RDS object containing the input data as a seurat object. Must include only the file name not the path because the assumption is that data files are kept in _data_ folder.
+    * _set.ident_ meta data column to set the identity of cells
+    * _genes.to.plot_ name of file that must be found in _resource_ folder and to contain one gene name per line
+    * _cell.types_ indicate what categories to include in the violin plot. If set to `"all"` it will use all the categories. If a subset of categories is desired you must pass the file name that exits in _resource_ folder and contain one category name per line
+    * _cluster.gene_ boolean if cluster genes
+    * _diagonalize_ boolean if diagnolize genes (i.e. placing highest values in each row closer to the diagonal to make for better vizualisation)
+    * _plot.dims_ numeric vector containing the widths and heights of the heat map and dot plot respectively
+    * _save.gene.order_ this is useful if the ordering of genes from diagonalization and/or clustering has created good visualisation and the user needs to store the ordered genes for future plots using the same gene set
+* an example of _genes.to.plot_ file:
+```
+TRAV2
+TRAV3
+TRAV4
+TRAV5
+TRAV6
+TRAV7
+```
 
 ### seurat_to_interactive_gene_expression.sh
   - before considering using this you should know that the web portal tool might be a better option
