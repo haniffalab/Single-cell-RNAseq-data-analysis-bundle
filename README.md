@@ -180,7 +180,7 @@ The standard assumptions of all pipelines are:
 
 An example of running a pipeline:\
 ```qsub add_dr.sh 'seurat.addr = "fliv_lymphoid_Stage_1.RDS"; do.normalize = T; add.PCA = T; add.TSNE = T; add.UMAP = T; add.FDG = T; save.dr = F'```
-* the above job will load the file "fliv\_lymphoid\_Stage\_1.RDS" from the data folder. If this file is not the data folder an error will occur and the job will be stoped;
+* the above job will load the file "fliv\_lymphoid\_Stage\_1.RDS" from the data folder. If this file is not inside the data folder an error will occur and the job will be stoped;
 * then the job will do data normalisation followed by the computation of PCA, tSNE, UMAP and FDG coordinates;
 * lastly it will save the resulting Seurat object overwriting the file that was initially loaded (in this case "fliv\_lymphoid\_Stage\_1.RDS"). 
 Jobs can be killed but take notice that if you terminate a process while it is writing to disk, the corresponding data will be lost.
