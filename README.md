@@ -433,11 +433,14 @@ TRAV7
     * _classifier_ name of classifier script. Currently the SVM is the only one implemented so this argument should always be set to "svm". However this argument allows extending of this pipeline to work with other classifiers. During development other classifiers were logistic regression, random forest, ada boost and multi-layer perceptron. However the SVM showed the best accuracy and recall over all so only the svm was kept. 
 
 ### train_doublets_SVM.sh
-  - pipeline for training doublet detector
-  - each doublet detector should only be used on the data set it was trained. While this sounds conter-intuitive for the machine learning users, all methods for doublet detection use this approach. The detector is actually trained on original data merged with dummy doublet data but it is applied only on real data. The idea behind ML-based doublet detectors is that a trained ML will find the optimum separation plane between dummy doublet and real data and because overfitting is avoided by regularisation, the plane will also separate a big part of the real doublets. It is intrinsically difficult to validate the identified doublets but the doublet removed by the the detectors created by this pipeline a) have a higher UMI and gene number counts b) have detected no doublet in plates data at least so far c) has improved downstream analysis, especially diffusion maps and UMAPs.
-  - It is usually better to first train a doublet detector, then remove doublets and only then do annotation (manual with the annotation template or automatically with trained classifiers)
-    - seurat.addr file name of the RDS object containing the input data as a seurat object. Must include only the file name not the path because the assumption is that data files are kept in the data folder.
-    - save.to folder name were classifier files and report are saved. The folder will be created in the resource folder because doublet detectors are consider resources.
+* pipeline for training doublet detector
+* each doublet detector should only be used on the data set it was trained. While this sounds conter-intuitive for the machine learning users, all methods for doublet detection use this approach. The detector is actually trained on original data merged with dummy doublet data but it is applied only on real data. The idea behind ML-based doublet detectors is that a trained ML will find the optimum separation plane between dummy doublet and real data and because overfitting is avoided by regularisation, the plane will also separate a big part of the real doublets. It is intrinsically difficult to validate the identified doublets but the doublet removed by the the detectors created by this pipeline a) have a higher UMI and gene number counts b) have detected no doublet in plates data at least so far c) has improved downstream analysis, especially diffusion maps and UMAPs.
+* It is usually better to first train a doublet detector, then remove doublets and only then do annotation (manual with the annotation template or automatically with trained classifiers)
+* an example of runing this pipeline:\
+`qsub train_doublets_SVM.sh 'seurat.addr = "kidney_all.RDS"; save.to = "classifier_svm_doublets_kidney"'`
+* the arguments:
+    * _seurat.addr_ file name of the RDS object containing the input data as a seurat object. Must include only the file name not the path because the assumption is that data files are kept in _data_ folder
+    * _save.to folder_ name were classifier files and report are saved. The folder will be created in _resource_ folder because doublet detectors are consider resources
 
 ### pull_data_subset_from_seurat.sh
   - used for saving to disk parts of a data set. This is especially for bigger data sets or when needing to run statistics for specific question that do not require the entire data and allows work in an interactive session
