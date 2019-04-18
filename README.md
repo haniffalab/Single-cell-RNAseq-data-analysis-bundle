@@ -178,7 +178,7 @@ The standard assumptions of all pipelines are:
 * any other type of result will be saved in the output folder
 * all pipelines (exceptions _split\_seurat\_by\_category.sh_, _merge\_seurat\_objects.sh_ and _subset\_seurat.sh_, _compute\_DEG.sh_, _gene\_discriminatory\_power\_analysis.sh_) when run create a dedicated folder inside the output folder. This carries the name of the pipeline + name of inputed data + unique time. Results other than processed data will be saved to this folder. This allows the user to map jobs with output. Inside the pipeline output folder there is a temporary folder created to stored transient processed data. This will be deleted most of the time when the job ends. In same case the transient processed data might be important for further work so the user should comment out the line `unlink(output_folder_material, ...)`
 
-An example of running a pipeline:
+An example of running a pipeline:\
 ```qsub add_dr.sh 'seurat.addr = "fliv_lymphoid_Stage_1.RDS"; do.normalize = T; add.PCA = T; add.TSNE = T; add.UMAP = T; add.FDG = T; save.dr = F'```
 * the above job will load the file "fliv\_lymphoid\_Stage\_1.RDS" from the data folder. If this file is not the data folder an error will occur and the job will be stoped;
 * then the job will do data normalisation followed by the computation of PCA, tSNE, UMAP and FDG coordinates;
