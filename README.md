@@ -361,6 +361,8 @@ TRAV7
 * this pipeline also creates interactive apps (as html pages) that allow exploration of the dimensionality reduction coordinates and AGA structure. Furthermore diffusion maps can be visualised in a 3D interactive enviroment
 * The 2D interactive app are build for tSNE, UMAP, FDG but take notice that these should be computed prior to running this pipeline (see _add\_dr.sh_ or _batch\_correction.sh_).
 * The AGA interactive app includes instructions when opened on a browser. See general description of single cell analysis pipeline for browser compatibility.
+* an example of runing this pipeline:\
+`qsub plot_dr.sh 'seurat.addr = "keratinocytes.RDS"; plot.by = "annotations"; type.to.colours = NA; runDiffusionMap=F; runAGA = T'`
 * the arguments:
     * _seurat.addr_ file name of the RDS object containing the input data as a seurat object. Must include only the file name not the path because the assumption is that data files are kept in _data_ folder.
     * _plot.by_ indicates the meta data column(s) to be used in colouring the plots. Can be one string if only one column is used or a character vector if more columns are required
