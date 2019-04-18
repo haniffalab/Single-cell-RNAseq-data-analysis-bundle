@@ -273,26 +273,53 @@ For smaller data sets the scripts can be run on a local station. In such cases o
 ### compute_DEG.sh
 * computes differential expressed genes (DEGs) on a seurat object
 * this is different from _make\_cell\_annotation\_template.sh_ which computes DEGs only on clusters
-* it allows computation of DEGs on any meta data category and also can be used post-annotation to obtained cell type DEGs
+* it allows computation of DEGs on any meta data category and also can be used post-annotation to get cell type DEGs
 * this pipeline does not take external arguments. Arguments must be set inside the R script _compute\_DEG.R_
 * an example of runing this pipeline:\
-`qsub compute_DEG.sh_`
+`qsub compute_DEG.sh`
 * the arguments:
     * _seurat.addrs_ full or relative path of the RDS file containing the Seurat object. 
     * _save.to file_ name where to save markers genes in csv format
-    * _DE.downsample_ boolean to downsample data if to big. Set this to TRUE for big data sets.
+    * _DE.downsample_ boolean to downsample data if to big. Set this to `TRUE` for big data sets.
     * _category_ meta data column by which DEGs are computed (e.g. cell.labels, stages)
 
 ### violin_plots.sh
-  - makes violin plots using set genes from a seurat object
-  - Seurat package already has ability to construct violin plots. However this pipeline is advantageous for big data sets that are difficult or impossible to manage on personal computers or interactive sessions
-    - seurat.addr file name of the RDS object containing the input data as a seurat object. Must include only the file name not the path because the assumption is that data files are kept in the data folder.
-    - set.ident meta data column to set the identity of cells
-    - type.to.colours name of csv file that contains the colour key (mapping between categories in the set.ident and colours). Must contain only the file name not the full or relative path because the assumption is that this is a resource file that is placed in the resource folder. Color keys compatible with the single cell analysis bundle can be generated using the interactive tool color_management.html
-    - cell.labels indicate what categories to include in the violin plot. If set to "all" it will use all the categories. If a subset of categories is desired you must pass the file name that exits in the resource folder and contain one category name per line.
-    - plot.width numeric plot width
-    - plot.height numeric plot height
-    - features.file name of file that must be found in the resource folder and to contain a gene name per line
+* makes violin plots using set genes from a seurat object
+* Seurat package already has ability to construct violin plots. However this pipeline is advantageous for big data sets that are difficult or impossible to manage on personal computers or interactive sessions
+* an example of runing this pipeline:\
+`qsub violin_plots.sh 'seurat.addr = "data_scseq.RDS"; set.ident = "cell.annotations"' type.to.colours = "data_color_key.csv"; cell.labels = "fname_with_labels"; plot.width = 10; plot.height = 10; features.file = "fname_with_genenames"'`
+* the arguments:
+    * _seurat.addr_ file name of the RDS object containing the input data as a seurat object. Must include only the file name not the path because the assumption is that data files are kept in _data_ folder.
+    * _set.ident_ meta data column to set the identity of cells
+    * _type.to.colours_ name of csv file that contains the colour key (mapping between categories in the set.ident and colours). Must contain only the file name not the full or relative path because the assumption is that this is a resource file that is placed in _resource_ folder. Color keys compatible with the single cell analysis bundle can be generated using the interactive tool _color\_management.html_
+    * _cell.labels_ indicates what categories to include in the violin plot. If set to `"all"` it will use all the categories. If a subset of categories is desired you must pass the file name that exits in the resource folder and contain one category name per line
+    * _plot.width_ numeric plot width
+    * _plot.height_ numeric plot height
+    * _features.file_ name of file that must be found in the resource folder and to contain a gene name per line
+* and example of _cell.labels_ file:\
+```
+MEP_kidney
+Mast cell_kidney
+Megakaryocyte_kidney
+Late Erythroid_skin
+Mid Erythroid_skin
+MEP_skin
+Megakaryocyte_skin
+Mast cell_skin
+```
+*an example of _features.file_ file:\
+```
+UNG
+MSH6
+CD19
+TNFRSF13C
+TRNT1
+PIK3CD
+MOGS
+INO80
+TNFRSF13B
+TNFSF12
+```
 
 ### gene_heatmap_and_spotplot.sh
   - plots a heat map and a dot plot using selected gene names and cell types from a seurat object
