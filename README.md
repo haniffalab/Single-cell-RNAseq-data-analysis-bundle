@@ -47,33 +47,33 @@ To run the pipelines you must download the entire bundle and transfer to a serve
 ## Prerequisites
 
 Python version 3.6
->pandas 0.22.0
->pptx 0.6.9
->patsy 0.5.0
->scanpy 1.2.2
->sklearn 0.19.1
->numpy 1.14.2
->scipy 1.0.0
->umap 0.2.3
+>pandas 0.22.0\
+pptx 0.6.9\
+patsy 0.5.0\
+scanpy 1.2.2\
+sklearn 0.19.1\
+numpy 1.14.2\
+scipy 1.0.0\
+umap 0.2.3
  
 R version 3.4.2
->Seurat 2.3.4
->dplyr 0.7.6
->reshape 0.8.8
->plyr 1.8.4
->ggplot2 3.0.0
->RColorBrewer 1.1.2
->BiocParallel 1.12.0
->gridExtra 2.3
->grid 3.4.2
->sva 3.26.0
->destiny 2.6.2
- ggplot2 3.0.0
- monocle 2.6.4
- harmony 0.1.0
- methods 3.4.2
- utils 3.4.2
- wordcloud 2.6
+>Seurat 2.3.4\
+dplyr 0.7.6\
+reshape 0.8.8\
+plyr 1.8.4\
+ggplot2 3.0.0\
+RColorBrewer 1.1.2\
+BiocParallel 1.12.0\
+gridExtra 2.3\
+grid 3.4.2\
+sva 3.26.0\
+destiny 2.6.2\
+ggplot2 3.0.0\
+monocle 2.6.4\
+harmony 0.1.0\
+methods 3.4.2\
+utils 3.4.2\
+wordcloud 2.6
  
  ## Structure
  
@@ -165,3 +165,23 @@ The _bunddle\_utils.R_:
     * @param `annotate.plot` boolean to indicate if plot should be annotated by with indices
     * @param `index.map` either a NA type or a numeric vector to set the indices of each label
  
+## Running a pipeline
+
+Each pipeline is run with the command `qsub name_of_pipeline.sh 'arguments in single quotes'`
+All pipelines must be run from their home directory
+Inside the single quotes each argument must be take a value. These value should be in double quotes if strings or without otherwise (basically following R standard syntax);
+A few pipelines do not take external arguments (_split\_seurat\_by\_category.sh_, _subset\_seurat.sh_ and _compute\_DEG.sh_). In these cases the arguments must be changed inside the R script.  
+The standard assumptions of all pipelines are:
+* all the data is in the data folder
+* resource files are found in the resources folder
+* any processed data resulted from the job will be saved to the data folder
+* any other type of result will be saved in the output folder
+* all pipelines (exceptions _split\_seurat\_by\_category.sh_, _merge\_seurat\_objects.sh_ and _subset\_seurat.sh_, _compute\_DEG.sh_, _gene\_discriminatory\_power\_analysis.sh_) when run create a dedicated folder inside the output folder. This carries the name of the pipeline + name of inputed data + unique time. Results other than processed data will be saved to this folder. This allows the user to map jobs with output. Inside the pipeline output folder there is a temporary folder created to stored transient processed data. This will be deleted most of the time when the job ends. In same case the transient processed data might be important for further work so the user should comment out the line `unlink(output_folder_material, ...)`
+* An example of running a pipeline:
+```qsub add_dr.sh 'seurat.addr = "fliv_lymphoid_Stage_1.RDS"; do.normalize = T; add.PCA = T; add.TSNE = T; add.UMAP = T; add.FDG = T; save.dr = F'```
+* the above job will load the file "fliv\_lymphoid\_Stage\_1.RDS" from the data folder. If this file is not the data folder an error will occur and the job will be stoped;
+* then the job will do data normalisation followed by the computation of PCA, tSNE, UMAP and FDG coordinates;
+* lastly it will save the resulting Seurat object overwriting the file that was initially loaded (in this case "fliv\_lymphoid\_Stage\_1.RDS"). 
+Jobs can be killed but take notice that if you terminate a process while it is writing to disk, the corresponding data will be lost.
+For smaller data sets the scripts can be run on a local station. In such cases one cannot submit jobs using the `qsub` command. Instead the R and/or Python scripts can be run directly in interactive environments but the global parameters either pe passed directly to the script or set inside the scripts.
+
