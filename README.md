@@ -211,9 +211,9 @@ For smaller data sets the scripts can be run on a local station. In such cases o
 
 ### make_cell_annotation_template.sh
 * makes an annotation template for data stored in a seurat object.
-* it first clusters the data than computes DEGs and arranges the results in form than can readily be used for data annotation
+* it first clusters the data than computes DEGs and arranges the results in a form than can readily be used for data annotation
 * the data file is overwritten at the end to include the new clustering.
-* After clustering it is also recommended to run the pipeline _interactive\_heatmap\_dotplot_ (see [__Fast Portals__](https://github.com/DoruMP/Fast-data-portals-for-scRNAseq-data)) on the clustered data because the interactive heatmap is highly useful for the annotation. But before doing that you should pre-append a string to the cluster index because pure cluster indices are not handled well in the interactive heat map (e.g. use Cluster\_110 instead of 110).
+* After clustering it is recommended to run the pipeline _interactive\_heatmap\_dotplot_ (see [__Fast Portals__](https://github.com/DoruMP/Fast-data-portals-for-scRNAseq-data)) on the clustered data because the interactive heatmap is highly useful for the annotation. But before doing that you should pre-append a string to the cluster index because pure cluster indices are not handled well in the interactive heat map (e.g. use Cluster\_110 instead of 110).
 * an example of runing this pipeline:\
 `qsub make_annotation_template.sh 'seurat.addr = "spleen_all.RDS"; clustering.res=30; DE.downsample=T'`
 * The arguments:
@@ -222,20 +222,26 @@ For smaller data sets the scripts can be run on a local station. In such cases o
    * _DE.downsample_: boolean, set to TRUE for bigger data sets. This downsamples cell number in bigger clusters decreasing time significantly for DEG computation
 
 ### split_seurat_by_category.sh
- - splits a seurat object in several subsets by the levels of a column in the meta data (e.g. splits by gender will create 2 smaller seurat objects, one for each gender)
- - this pipeline does not use the output folder and the resulting data is saved in the pipeline home folder. I made this choice to allow investigating the resulting subsets of data before I transfer to the data folder to make sure I am overwriting any thing.
- - this pipeline does not accept external arguments. Arguments must be changed inside the R script split_seurat_by_category.sh
- - it is recommended that the results subsets are run through dimensionality reduction or batch correction before they are used for any downstream work. 
-   - sort.by column meta data by which the data should be splitted
-   - seurat.addrs full or relative path for the RDS file storing the Seurat object
+* splits a seurat object in several subsets by the levels of a column in the meta data (e.g. splits by gender will create 2 smaller seurat objects, one for each gender)
+* this pipeline does not use the output folder and the resulting data is saved in the pipeline home folder. I made this choice to allow investigating the resulting subsets of data before I transfer to the data folder to make sure I am overwriting any thing.
+* this pipeline does not accept external arguments. Arguments must be changed inside the R script _split\_seurat\_by\_category.R_
+* it is recommended that the results subsets are run through dimensionality reduction or batch correction before they are used for any downstream work. 
+* an example of runing this pipeline:\
+`qsub split_seurat_by_category.sh`
+* The arguments:
+   * _sort.by_ column meta data by which the data should be splitted
+   * _seurat.addrs_ full or relative path for the RDS file storing the Seurat object
  
  ### merge_seurat_objects
-  - merges all the seurat object from a list fo file names
-    - seurat.addrs character vector of RDS file names (must be at least 2) containing the seurat objects. Must include only the file name, not the full path. The assumption is that the datasets are found in the data folder inside the bundle.
-    - append_tag boolean flag to append a tag to the meta data to help keep track of the merged data sets. This has proved very useful for many downstream work so it is recommended to add the tags. 
-    - tags_to_append character vector containing the tags. Must be the same length as seurat.addrs. If append_tag is set to FALSE this argument will be ignored but should not be omitted from the list of arguments and can be set to NULL or NA. 
-    - append_tags_at meta data column where to append to tags
-    - save.at RDS file name where to save the merged seurat object. Must contain only the file name, not the path. It will be save to the data folder. Make sure the file names does not exist before running the pipeline to avoid over-writing of data.
+* merges all the seurat object from a list fo file names
+* an example of runing this pipeline:\
+`qsub merge_seurat_objects.sh 'seurat.addrs = c("data1.RDS", "data2.RDS"); append_tag = T; tags_to_append = c("tag1", "tag2"); append_tags_at = "sample.ids"; save.at = "merged_data.RDS"'`
+* the arguments:
+    * _seurat.addrs_ character vector of RDS file names (must be at least 2) containing the seurat objects. Must include only the file name, not the full path. The assumption is that the datasets are found in the data folder inside the bundle
+    * _append\_tag_ boolean flag to append a tag to the meta data to help keep track of the merged data sets. This has proved very useful for many downstream work so it is recommended to add the tags
+    * _tags\_to\_append_ character vector containing the tags. Must be the same length as seurat.addrs. If _append\_tag_ is set to `FALSE` this argument will be ignored but should not be omitted from the list of arguments and can be set to `NULL` or `NA`
+    * _append\_tags\_at_ meta data column where to append to tags
+    * _save.at_ RDS file name where to save the merged seurat object. Must contain only the file name, not the path. It will be save to the data folder. Make sure the file names does not exist before running the pipeline to avoid over-writing of data.
 
 ### subset_seurat.sh
   - used to subset a part of the data set and save to a new RDS file as a seurat object
