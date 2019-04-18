@@ -263,22 +263,25 @@ For smaller data sets the scripts can be run on a local station. In such cases o
 `qsub add_dr.sh 'seurat.addr = "data_scseq.RDS"; do.normalize = T; add.PCA = T; add.TSNE = T; add.UMAP = T; add.FDG = T; save.dr = F'`
 * the arguments are:
     * _seurat.addr_ file name of the RDS object containing the input data as a seurat object. Must include only the file name not the path because the assumption is that data files are kept in _data_ folder
-    * _do.normalize_ boolean to normalize data. This must be set to `TRUE` of the input data has not yet been normalized. If this is set to `FALSE` but the data has not been previously normalised and error will occur and the job will be killed
+    * _do.normalize_ boolean to normalize data. This must be set to `TRUE` if the input data has not yet been normalized. If this is set to `FALSE` but the data has not been previously normalised and error will occur and the job will be killed
     * _add.PCA_ boolean to compute PCA. Same principles and warnings as for the previous argument
     * _add.TSNE_ boolean to compute tSNE
     * _add.UMAP_ boolean to compute UMAP
     * _add.FDG_ boolean to compute FDG
-    * _save.dr_ boolean to save the dimensionality reduction coordinates as a data frame in a csv file in the pipeline output folder. This is particularly useful for bigger data sets which either take long time to load or are not manageable on personal computers at all. In those case having the coordinates and meta data in csv file will save time and computer crashes
+    * _save.dr_ boolean to save the dimensionality reduction coordinates as a data frame in a csv file in the pipeline output folder. This is particularly useful for bigger data sets which either take long time to load or are not manageable on personal computers at all. In those case having the coordinates and meta data in csv files will save time
 
 ### compute_DEG.sh
-  - computes differential expressed genes (DEGs) on a seurat object
-  - this is different from make_cell_annotation_template.sh which computes DEGs only on clusters. 
-  - it allows computation of DEGs on any meta data and also can be used post-annotation to obtained cell type signatures
-  - this pipeline does not take external arguments. Arguments must be set inside the R script compute_DEG.R
-    - seurat.addrs full or relative path of the RDS file containing the Seurat object. 
-    - save.to file name where to save markers genes in csv format
-    - DE.downsample boolean to downsample data if to big. Set this to TRUE for big data sets.
-    - category meta data column by which DEGs are computed (e.g. cell.labels, stages)
+* computes differential expressed genes (DEGs) on a seurat object
+* this is different from _make\_cell\_annotation\_template.sh_ which computes DEGs only on clusters
+* it allows computation of DEGs on any meta data category and also can be used post-annotation to obtained cell type DEGs
+* this pipeline does not take external arguments. Arguments must be set inside the R script _compute\_DEG.R_
+* an example of runing this pipeline:\
+`qsub compute_DEG.sh_`
+* the arguments:
+    * _seurat.addrs_ full or relative path of the RDS file containing the Seurat object. 
+    * _save.to file_ name where to save markers genes in csv format
+    * _DE.downsample_ boolean to downsample data if to big. Set this to TRUE for big data sets.
+    * _category_ meta data column by which DEGs are computed (e.g. cell.labels, stages)
 
 ### violin_plots.sh
   - makes violin plots using set genes from a seurat object
