@@ -354,18 +354,19 @@ TRAV7
     * _dim.type_ dimensionality reduction type to be used in the resulted app (e.g. tsne, umap, fdg). Must exist in the `@dr` slot of the seurat objects, otherwise it will raise error and kill the process. You can use the _add\_dr.sh_ pipeline prior to this if you are not sure
 
 ### plot_dr.sh
-  - pipeline used to plot all dimensionally coordinates and colour the points by any column in the meta data
-  - additional it can also compute diffusion map and AGA graph
-  - warning about diffusion maps: most of them will make no sense if the data does not contain a true lineage. To ensure the diffusion map will make sense care must be taken in up stream work flow and must ensure removal of doublets, removal of outlier if possible and most importantly that the cell types in the data are part of a true biological lineage and only one lineage.
-  - warning about AGA: some times AGA results are difficult to interpret especially when running on data sets that contain a too many cell types. Establishing what too many means is up to trial and error and experience.
-  - this pipeline also creates interactive apps (as html pages) that allow exploration of the dimensionality reduction coordinates and AGA structure. Further more diffusion maps can be visualised in a 3D interactive enviroment.
-  - The 2D interactive app are build for tSNE, UMAP, FDG but take notice that these should be computed prior to running this pipeline (see add_dr.sh or batch_correction.sh).
-  - The AGA interactive app includes instructions when opened on a browser. See general description of single cell analysis pipeline for browser compatibility.
-    - seurat.addr file name of the RDS object containing the input data as a seurat object. Must include only the file name not the path because the assumption is that data files are kept in the data folder.
-    - plot.by indicates the meta data column(s) to be used in colouring the plots. Can be one string if only one column is used or a character vector if more columns are required.
-    - type.to.colours indicates colours for all category for all meta data columns chosen  to plot. Can be on string if only on column is chosen or a character vector if more columns are chosen. Each value can be NA if random colours are required or color key file in csv format found in the resource folder. See the color_management.html tool for generating color keys compatible with the single cell analysis bundle.
-    - runDiffusionMap boolean to run diffusion map. Set this to TRUE only after considering the warnings about diffusion maps.
-    - runAGA boolean to run AGA
+* pipeline used to plot all dimensionally coordinates and colour the points by any column in the meta data
+* additional it can also compute diffusion map and AGA graph
+* warning about diffusion maps: most of them will make no sense if the data does not contain a true lineage. To ensure the diffusion map will make sense care must be taken in up stream work flow and must ensure removal of doublets, removal of outliers if possible and most importantly that the cell types in the data are part of a true biological lineage and only one lineage
+* warning about AGA: some times AGA results are difficult to interpret especially when running on data sets that contain too many cell types. Establishing what too many means is up to trial and error and experience
+* this pipeline also creates interactive apps (as html pages) that allow exploration of the dimensionality reduction coordinates and AGA structure. Furthermore diffusion maps can be visualised in a 3D interactive enviroment
+* The 2D interactive app are build for tSNE, UMAP, FDG but take notice that these should be computed prior to running this pipeline (see _add\_dr.sh_ or _batch\_correction.sh_).
+* The AGA interactive app includes instructions when opened on a browser. See general description of single cell analysis pipeline for browser compatibility.
+* the arguments:
+    * _seurat.addr_ file name of the RDS object containing the input data as a seurat object. Must include only the file name not the path because the assumption is that data files are kept in _data_ folder.
+    * _plot.by_ indicates the meta data column(s) to be used in colouring the plots. Can be one string if only one column is used or a character vector if more columns are required
+    * _type.to.colours_ indicates colours for all categories for all meta data columns chosen to plot. Can be one string if only on column is chosen or a character vector if more columns are chosen. Each value can be `NA` if random colours are required or a color key file in csv format found in _resource_ folder. See the _color\_management.html_ tool for generating color keys compatible with the single cell analysis bundle
+    * _runDiffusionMap_ boolean to run diffusion map. Set this to `TRUE` only after considering the warnings about diffusion maps.
+    * _runAGA_ boolean to run AGA
 
 ### gene_discriminatory_power_analysis.sh
   - this pipeline trains a random forest for classifying cell labels in a seurat object using a set of gene names
