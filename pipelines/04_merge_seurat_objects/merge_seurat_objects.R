@@ -81,7 +81,7 @@ seurat.obj = NormalizeData(object = seurat.obj, normalization.method = "LogNorma
 print("Computing variable genes ... ")
 seurat.obj = FindVariableGenes(object = seurat.obj, mean.function = ExpMean, 
                                 dispersion.function = LogVMR, x.low.cutoff = .0125, 
-                                x.high.cutoff = 3, y.cutoff = .625)
+                                x.high.cutoff = 3, y.cutoff = .625, do.plot=F)
 print("Scaling data ...")
 seurat.obj = ScaleData(object=seurat.obj)
 print("Saving data ... ")

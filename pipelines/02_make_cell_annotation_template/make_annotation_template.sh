@@ -5,7 +5,7 @@
 #$ -V
 #$ -l h_rt=47:59:59
 #$ -l h_vmem=100G
-#$ -pe smp 6
+#$ -pe smp 5
 
 if [ "$#" -ne 1 ]; then
     echo "Illegal number of parameters"

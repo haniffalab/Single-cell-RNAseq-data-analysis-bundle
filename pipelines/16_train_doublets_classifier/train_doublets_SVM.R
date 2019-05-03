@@ -96,7 +96,7 @@ seurat.obj <- NormalizeData(object = seurat.obj, normalization.method = "LogNorm
 # compute variable genes
 seurat.obj <- FindVariableGenes(object = seurat.obj, mean.function = ExpMean, 
                                 dispersion.function = LogVMR, x.low.cutoff = .0125, 
-                                x.high.cutoff = 3, y.cutoff = .625)
+                                x.high.cutoff = 3, y.cutoff = .625, do.plot=F)
 # save variable genes in the same folder as the classifier
 classifier.features <- seurat.obj@var.genes
 saveRDS(classifier.features, file.path(save.to, "feature_genes.RDS"))

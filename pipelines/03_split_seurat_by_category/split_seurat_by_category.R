@@ -1,12 +1,8 @@
 library(Seurat)
 
-# also exludes doublets
+sort.by <- "sort.ids"
+seurat.addrs <- "../../data/somedata.RDS"
 
-sort.by <- "gender"
-seurat.addrs <- "../../data/fetal_liver_all.RDS"
-
-#######################################################################################################
-#######################################################################################################
 #######################################################################################################
 
 # load the seurat object
@@ -26,9 +22,6 @@ store <- c()
 for (i in 1:length(cats.unique)){
   category <- cats.unique[i]
   cat.object <- SubsetData(object=seurat.obj, ident.use=category, subset.raw=T, do.clean = T)
-  # filter out doublets
-  cells.to.keep <- names(cat.object@ident)[cat.object@meta.data$doublets == "Singlet"]
-  cat.object <- SubsetData(object=cat.object, cells.use=cells.to.keep)
   
   print(paste("Doing: ", category, sep = ""))
   

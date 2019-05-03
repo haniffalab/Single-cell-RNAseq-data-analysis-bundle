@@ -1,5 +1,5 @@
 # seurat object address
-seurat.addrs  <- "../../seurat_data/somedata.RDS"
+seurat.addrs  <- "../../data/somedata.RDS"
 save.to       <- "../../marker_genes/somedata.csv"
 DE.downsample <- F  # flag to indicate to downsample by cluster before computing DE genes
 category      <- "cell.labels" # categories to calculate DE genes for

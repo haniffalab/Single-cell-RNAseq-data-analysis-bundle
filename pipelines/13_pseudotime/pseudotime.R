@@ -59,9 +59,9 @@ source("../../tools/bunddle_utils.R")
 library(Seurat)
 library(ggplot2)
 library(RColorBrewer)
+library(dplyr)
 library(plyr)
 library(monocle)
-library(dplyr)
 library(reshape2)
 
 #######################################################################################################

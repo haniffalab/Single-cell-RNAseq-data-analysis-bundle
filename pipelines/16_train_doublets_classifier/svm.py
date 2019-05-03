@@ -26,7 +26,14 @@ modelFile.close()
 print(X.shape)
 
 from sklearn.model_selection import train_test_split
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.33, random_state=19)
+if X.shape[0] < 100000:
+    test_size = .33
+else:
+    test_size = (X.shape[0] - 66666.0) / X.shape[0]
+
+print("Test size is is {n}".format(n = test_size))
+
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=19)
 
 params = {"C":[1, 10, 100, 300]}
 

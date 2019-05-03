@@ -56,8 +56,8 @@ source("../../tools/bunddle_utils.R")
 
 library(Seurat)
 library(dplyr)
-library(reshape)
 library(plyr)
+library(reshape)
 library(ggplot2)
 library(RColorBrewer)
 

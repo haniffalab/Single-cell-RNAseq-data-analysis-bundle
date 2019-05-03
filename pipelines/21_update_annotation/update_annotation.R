@@ -4,7 +4,7 @@ args = unlist(strsplit(args, ";"))
 
 arguments.list = "
 seurat.addr.arg = args[1]
-make.app        = args[2]
+make.app.arg    = args[2]
 "
 
 expected_arguments = unlist(strsplit(arguments.list, "\n"))
@@ -30,26 +30,28 @@ for(n in 1:length(expected_arguments)){
   }
 }
 
-# create required folders for output and work material
-output_folder = gsub(pattern="^\\d+_", replacement="", x=basename(getwd()))
-output_folder = paste(output_folder, seurat.addr, sep = "_")
-c.time = Sys.time()
-c.time = gsub(pattern=" BST", replacement="", x=c.time)
-c.time = gsub(pattern=":", replacement="", x=c.time)
-c.time = gsub(pattern=" ", replacement="", x=c.time)
-c.time = gsub(pattern="-", replacement="", x=c.time)
-c.time = substr(x=c.time, start=3, stop=nchar(c.time))
-output_folder = paste(output_folder, c.time, sep = "_")
-output_folder = file.path("../../output", output_folder)
-dir.create(output_folder)
+if(make.app){
+  # create required folders for output and work material
+  output_folder = gsub(pattern="^\\d+_", replacement="", x=basename(getwd()))
+  output_folder = paste(output_folder, seurat.addr, sep = "_")
+  c.time = Sys.time()
+  c.time = gsub(pattern=" BST", replacement="", x=c.time)
+  c.time = gsub(pattern=":", replacement="", x=c.time)
+  c.time = gsub(pattern=" ", replacement="", x=c.time)
+  c.time = gsub(pattern="-", replacement="", x=c.time)
+  c.time = substr(x=c.time, start=3, stop=nchar(c.time))
+  output_folder = paste(output_folder, c.time, sep = "_")
+  output_folder = file.path("../../output", output_folder)
+  dir.create(output_folder)
+}
 
 seurat.addr = file.path("../../data", seurat.addr)
 
 source("../../tools/bunddle_utils.R")
 
 library(Seurat)
-library(plyr)
 library(dplyr)
+library(plyr)
 library(reshape2)
 library(RColorBrewer)
 library(wordcloud)

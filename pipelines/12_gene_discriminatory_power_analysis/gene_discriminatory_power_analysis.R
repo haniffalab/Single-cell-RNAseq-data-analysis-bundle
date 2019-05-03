@@ -39,13 +39,16 @@ library(dplyr)
 library(plyr)
 library(reshape)
 library(ggplot2)
+library(RColorBrewer)
 
 source("../../tools/bunddle_utils.R")
 
 seurat.addr        = file.path("../../data", seurat.addr)
 cell.types         = file.path('../../resources', cell.types)
 feature_genes      = file.path('../../resources', feature_genes)
-type.to.colours    = file.path("../../resources", type.to.colours)
+if(!is.na(type.to.colours)){
+  type.to.colours    = file.path("../../resources", type.to.colours)
+}
 
 cell.types.file = file(cell.types, "r")
 cell.types = readLines(cell.types.file)

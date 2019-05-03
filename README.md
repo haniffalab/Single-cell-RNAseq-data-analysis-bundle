@@ -26,7 +26,7 @@ To run the pipelines you must download the entire bundle and transfer to a serve
 
 * create the seurat object (_seurat\_from\_count\_tables.sh_)
 * train a doublet detector (_train\_doublets\_SVM.sh_)
-* update doublet assignment in data (can use _Apply\_Classifier\_On\_Seurat\_Object(..)_ function in a customised script or, the easier approach is to run again the seurat object creation process with _seurat\_from\_count\_tables.sh_ and this time setting the argument _identify.doublets = TRUE_)
+* update doublet assignment in data (can use _Apply\_Classifier\_On\_Seurat\_Object(..)_ function in a customised script or, the easier approach is to run again the seurat object creation process with _seurat\_from\_count\_tables.sh_ and this time setting the argument `_identify.doublets = TRUE_`)
 * subset the seurat object into singlets and doublets (_split\_seurat\_by\_category.sh_). It is advised to keep the doublets data (even if you have not further use for them) for future reference.
 * compute dimensionality reduction coordinates (_add\_dr.sh_)
 * make an annotation template and annotate (_make\_cell\_annotation\_template.sh_)
@@ -62,7 +62,6 @@ R version 3.4.2
 dplyr 0.7.6\
 reshape 0.8.8\
 plyr 1.8.4\
-ggplot2 3.0.0\
 RColorBrewer 1.1.2\
 BiocParallel 1.12.0\
 gridExtra 2.3\
@@ -84,7 +83,8 @@ wordcloud 2.6
  * pipelines folder contain a folder for each pipeline
  * resources folder containing sample key, colour keys, cell type classifier, doublet detectors, options file etc.
  * tools folder - there is no reason why the user should be concern with this folder. It contains programs for running force-directed graph, AGA, UMAP, classifier prediction, doublet detection, pseudotime 3D viewer app builder and a file with lots of utilities. These are never required to be called directly by the user. 
- * the tools folder includes the file bunddle_utils.R. 
+ * the tools folder includes the file bunddle\_utils.R
+ * you must set the variable `python.addr` ain the script _tools/bunddle\_utils.R_ and set the R path in each shel script
  * if you want to use the portal tools and fast gene expression explorer you must have an additional folder named portal_tool where these tools are stored and can be used as pipelines
 
 ## Colour keys
@@ -155,7 +155,7 @@ The _bunddle\_utils.R_:
     * @param `point.labels` character vector of all labels in the data set
     * @param `dr1` numeric vector of first dimension coordinates
     * @param `dr2` numeric vector of second dimension coordinates
-    * @param `no.legend` boolean indicating if to plot the legend inside the final plot. Sometimes it is desirable to plot the legend separatly to allow for more flexibility in arranging figure panels. In this case set this argument to FALSE and use plot.indexed.legend to create a separate legend figure
+    * @param `no.legend` boolean indicating if to plot the legend inside the final plot. Sometimes it is desirable to plot the legend separatly to allow for more flexibility in arranging figure panels. In this case set this argument to `FALSE` and use plot.indexed.legend to create a separate legend figure
     * @param `plt.lb.sz` label size
     * @param `txt.lb.size` text label size
     * @param `pt.size` point size
@@ -220,11 +220,11 @@ For smaller data sets the scripts can be run on a local station. In such cases o
 * The arguments:
    * _seurat.addr_: string, name of data file. Must be RDS format and contain a seurat object
    * _clustering.res_: integer, Louvain clustering resolution. Use higher values for bigger data sets. Always aim at over clustering for the purpose of data annotation. It is better to merge clusters that will be assigned the same labels than to have rarer population diluted inside bugger clusters and never being detected.
-   * _DE.downsample_: boolean, set to TRUE for bigger data sets. This downsamples cell number in bigger clusters decreasing time significantly for DEG computation
+   * _DE.downsample_: boolean, set to `TRUE` for bigger data sets. This downsamples cell number in bigger clusters decreasing time significantly for DEG computation
 
 ### split_seurat_by_category.sh
 * splits a seurat object in several subsets by the levels of a column in the meta data (e.g. splits by gender will create 2 smaller seurat objects, one for each gender)
-* this pipeline does not use the output folder and the resulting data is saved in the pipeline home folder. I made this choice to allow investigating the resulting subsets of data before I transfer to the data folder to make sure I am overwriting any thing.
+* this pipeline does not use the output folder and the resulting data is saved in the pipeline home folder. I made this choice to allow investigating the resulting subsets of data before I transfer to _data_ folder to make sure I am not overwriting any thing.
 * this pipeline does not accept external arguments. Arguments must be changed inside the R script _split\_seurat\_by\_category.R_
 * it is recommended that the results subsets are run through dimensionality reduction or batch correction before they are used for any downstream work. 
 * an example of runing this pipeline:\
@@ -255,6 +255,7 @@ For smaller data sets the scripts can be run on a local station. In such cases o
     * _save.at_ full or relative path of the output RDS file 
     * _process_ boolean flag to run common data processing (normalisation, scaling, variable genes computation, PCA). It is recommended to set this to `TRUE`. However there are cases when data processing might not be required so in this case time can be saved by setting this argument to `FALSE`.
     * _add.dr_ boolean flag to compute tSNE, UMAP and FDG. It is recommended to set this to `TRUE`. If `TRUE` the previous argument also be set to `TRUE` otherwise an error will raised. There are times when these computations are not required so set this argument to `FALSE`. Not processing and not adding dimensionally reduction also ensures light-weight data sets which are easy to transfer over the web. 
+    * _filter.args_ list of named vectors indicating fields on which to subset the data
 
 ### add_dr.sh
 * computes tSNE, UMAP and FDG on a seurat object
@@ -423,7 +424,7 @@ TRAV7
 * the classifier files and report are saved in a user-defined folder placed in the resource folder
 * see _resources/classifier\_svm\_cell\_type\_liver_ for an example of a trained classifier
 * classifiers can be applied using the function _Apply\_Classifier\_On\_Seurat\_Object_ (see the _bunddle\_utils.R_ script)
-* IMPORTANT NOTICE: classifiers must be used only on the same type of data that it was trained on e.g. a classifier for cells in liver should only be applied on liver data. If for example you will apply the liver cell types classifier on thymus the classifier will only "see" the cell types it was trained to see and your results will be wrong. Furthermore most of the time the use of classifiers in a cross-tissue manner is highly unprofessional and indicate severe incompetence and a potential need for staff replacement. There are however a few (very few) exceptions where a classifier could be used on a different tissue from its training (e.g. the origin of the unlabelled data is not known; used as a pseudo-metric for cross-tissue cell type similarities).
+* IMPORTANT NOTICE: classifiers must be used only on the same type of data that it was trained on e.g. a classifier for cells in liver should only be applied on liver data. If for example you will apply the liver cell types classifier on thymus the classifier will only "see" the cell types it was trained to see and your results will be wrong. Furthermore most of the time the use of classifiers in a cross-tissue manner is highly unprofessional and may indicate severe incompetence and a potential need for staff replacement. There are however a few (very few) exceptions where a classifier could be used on a different tissue from its training (e.g. the origin of the unlabelled data is not known; used as a pseudo-metric for cross-tissue cell type similarities).
 * DEGs must be computed before training a classifier (see _compute\_DEG_ pipeline)
 * an example of runing this pipeline:\
 `qsub train_classifier.sh 'seurat.addr = "spleen_all.RDS"; marker.genes="spleen_all_DEGs.csv"; save.at="classifier_svm_cell_type_spleen"; classifier="svm";'`
@@ -504,9 +505,23 @@ TRAV7
 ### super_markers.sh
 * selects and order DEGs most specific for each cell population in the data set
 * the result are cell type signatures i.e. list of genes highly relevant for cell annotations
-* this script has only one argument to set: _seurat.addr_ which follot the same format as in other pipelines
-* _set.ident_ is set to `"cell.labels"`. Change this to what is relevant for your project if: either you are not interested in cell type signatures or the cell annotations are not kept in the `"cell.labels"` meta data column (this might be the case if you have not started data analysis with this bundle)
+* the arguments:
+    * _seurat.addr_ file name of the RDS object containing the input data as a seurat object. Must include only the file name not the path because the assumption is that data files are kept in _data_ folder.
+    * _set.ident_ meta data column to set the identity of cells
 * see the image for an example of plotted truncated signature (for B cells) obtained using this pipeline:\
 ![signatureexample](signature.png)
+
+### scanpy_to_seurat.sh
+* converts a scanpy object to a seurat object
+* the arguments:
+    * _scanpy.addr_ file name storing a scanpy object. Must be present in _data_ folder
+    * _save.to_ file name for saving the resulted Seurat object. Will be saved in _data_ folder
+    
+### multiple_AGAs.sh
+* computed AGA graphs and force-directed graph on multiple subsets of cell labels from one or several data sets
+* useful for pre-trajectory work by helping to explore putative trajectories in a data set or across many data sets
+* this pipeline take one argument which is an option file
+* an example of the option file is included with the pipeline
+    
   
   

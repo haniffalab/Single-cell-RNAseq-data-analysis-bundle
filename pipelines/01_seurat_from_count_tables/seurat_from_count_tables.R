@@ -54,8 +54,8 @@ key.fname = "../../resources/key.csv"
 sample.key.fname = "../../resources/sample_key.csv"
 
 library(Seurat)
-library(plyr)
 library(dplyr)
+library(plyr)
 
 # function to load sequentiall 10x data from many folders passed as a vector
 # return a seurat object created from merging all the 10X data in the folders
@@ -230,7 +230,7 @@ print("Computing variable genes ...")
 # find variable genes
 seurat.obj = FindVariableGenes(object = seurat.obj, mean.function = ExpMean, 
                                         dispersion.function = LogVMR, x.low.cutoff = .0125, 
-                                        x.high.cutoff = 3, y.cutoff = .625)
+                                        x.high.cutoff = 3, y.cutoff = .625, do.plot=F)
 # calculate percentage of variable genes
 print(paste("Percentage of variable genes:", round(100 * length(seurat.obj@var.genes) / dim(seurat.obj@data)[1], digits = 2), sep = " "))
 

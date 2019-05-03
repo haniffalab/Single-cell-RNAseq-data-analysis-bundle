@@ -313,12 +313,12 @@ seurat.query.obj = NormalizeData(object = seurat.query.obj, normalization.method
 print("Computing variable genes ... ")
 seurat.query.obj = FindVariableGenes(object = seurat.query.obj, mean.function = ExpMean, 
                                      dispersion.function = LogVMR, x.low.cutoff = .0125, 
-                                     x.high.cutoff = 3, y.cutoff = .625)
+                                     x.high.cutoff = 3, y.cutoff = .625, do.plot=F)
 seurat.ref.obj = NormalizeData(object = seurat.ref.obj, normalization.method = "LogNormalize", scale.factor = 10000)
 print("Computing variable genes ... ")
 seurat.ref.obj = FindVariableGenes(object = seurat.ref.obj, mean.function = ExpMean, 
                                    dispersion.function = LogVMR, x.low.cutoff = .0125, 
-                                   x.high.cutoff = 3, y.cutoff = .625)
+                                   x.high.cutoff = 3, y.cutoff = .625, do.plot=F)
 print("Finished computing the variable genes.")
 
 shared.genes = c(seurat.query.obj@var.genes, seurat.ref.obj@var.genes)

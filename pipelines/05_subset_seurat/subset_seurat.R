@@ -1,14 +1,13 @@
 # import libraries
 library(Seurat)
 
-seurat.obj.addr = "../../data/fetal_liver_all.RDS"
-save.at = "../../data/fetal_liver_DC2_lineage.RDS"
+seurat.obj.addr = "../../data/same_data.RDS"
+save.at = "../../data/myeloid_lineage.RDS"
 process = T
 add.dr  = F
-
 filter.args = list(
   "cell.labels" = c("HSC/MPP" , "Neutrophil-myeloid progenitor", "Monocyte-DC precursor", "DC2"),
-  "gender" = c("male")
+  "sort.ids" = c("CD45+")
   )
 
 #######################################################################################################
@@ -46,7 +45,7 @@ if(!any(cells.to.keep)){
     # find variable genes
     seurat.obj = FindVariableGenes(object = seurat.obj, mean.function = ExpMean, 
                                    dispersion.function = LogVMR, x.low.cutoff = .0125, 
-                                   x.high.cutoff = 3, y.cutoff = .625)
+                                   x.high.cutoff = 3, y.cutoff = .625, do.plot=F)
     # calculate percentage of variable genes
     print(paste("Percentage of variable genes:", round(100 * length(seurat.obj@var.genes) / dim(seurat.obj@data)[1], digits = 2), sep = " "))
     
@@ -83,7 +82,5 @@ if(!any(cells.to.keep)){
   print(sprintf("saving data at: %s", save.at))
   saveRDS(seurat.obj, save.at)
 }
-
-file.remove("Rplots.pdf")
 
 print("Ended beautifully ... ")
