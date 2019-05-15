@@ -20,6 +20,7 @@ import matplotlib; matplotlib.use('Agg');
 import scanpy.api as sc
 from os.path import join
 from scipy.io import mmwrite
+import numpy as np
 
 data = sc.read(file_name)
 
@@ -40,3 +41,11 @@ data.obs_names.to_series().to_csv(cell_names_file)
 meta_data = join(output_folder, "meta_data.csv")
 data.obs.to_csv(meta_data)
 
+# save DR coordinates
+DR_keys = data.obsm.keys()
+for DR_key in DR_keys:
+    file_name = "DR_{DR_key}.csv".format(DR_key=DR_key)
+    file_name = join(output_folder, file_name)
+    DR_data = data.obsm[DR_key]
+    np.savetxt(file_name, DR_data, delimiter=",")
+    

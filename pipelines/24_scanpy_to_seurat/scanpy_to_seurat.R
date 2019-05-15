@@ -90,6 +90,18 @@ seurat.obj = CreateSeuratObject(raw.data = expression.data, min.cells = 0, min.g
 seurat.obj@meta.data = cbind(seurat.obj@meta.data, meta.data)
 seurat.obj@data = expression.data
 
+# read all DR coordinates
+DR.files = list.files(output_folder)[grep(pattern="^DR_", x=list.files(output_folder))]
+for(k in seq_along(DR.files)){
+  DR.file = file.path(output_folder, DR.files[k]) 
+  DR.data = read.csv(DR.file, sep=",", header=F)
+  DR.name = unlist(strsplit(x=DR.files[k], "\\."))[1]
+  DR.name = unlist(strsplit(x=DR.name, split="DR_"))[2]
+  colnames(DR.data) = paste(DR.name, 1:2, sep="_")
+  seurat.obj = SetDimReduction(object=seurat.obj, reduction.type=DR.name, slot = "key", new.data = DR.name)
+  seurat.obj = SetDimReduction(object=seurat.obj, reduction.type=DR.name, slot="cell.embeddings", new.data=as.matrix(DR.data))
+}
+
 print("Saving the seurat object ... ")
 saveRDS(seurat.obj, save.to)
 
